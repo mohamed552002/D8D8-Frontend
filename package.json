@@ -1,0 +1,8 @@
+{
+  "name": "partyhub-client",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npm --prefix partyhub-web run start",
+    "build": "npm --prefix partyhub-web run build"
+  }
+}
