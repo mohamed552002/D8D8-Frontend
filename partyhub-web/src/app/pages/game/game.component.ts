@@ -626,6 +626,9 @@ export class GameComponent implements OnInit, OnDestroy {
     if (this.isMeAnswering() || this.isCracked) {
       return 'أنت الأسرع! تفضل بالإجابة الآن:';
     }
+    if (this.isLockedOut()) {
+      return 'تم استبعادك من هذا السؤال ⛔ (في انتظار المضيف أو بقية اللاعبين)';
+    }
     if (this.buzzOpen) {
       return 'الـ Buzz مفتوح! اضغط الزر الآن!';
     }
