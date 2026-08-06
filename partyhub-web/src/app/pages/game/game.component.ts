@@ -232,12 +232,11 @@ import { GameSession, PlayerScoreDto, QuestionDto, GameSummaryDto } from '../../
               <!-- General Control Bar -->
               <div style="display: flex; flex-wrap: wrap; gap: 0.8rem; width: 100%; justify-content: space-between; align-items: center;">
 
-                <!-- ReOpen Buzz Button: Displays when a question times out -->
+                <!-- ReOpen Buzz Button: Always available to host during active round -->
                 <button
-                  *ngIf="isTimedOut || (timerSeconds$ | async) === 0"
                   type="button"
                   class="btn-secondary"
-                  style="border-color: var(--sky-blue); color: var(--sky-blue);"
+                  style="border-color: var(--sky-blue); color: var(--sky-blue); font-weight: 800;"
                   (click)="onReOpenBuzz()"
                 >
                   إعادة فتح الـ Buzz 🔄
