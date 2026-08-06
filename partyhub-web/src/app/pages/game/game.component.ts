@@ -690,7 +690,14 @@ export class GameComponent implements OnInit, OnDestroy {
 
   async onBuzz(): Promise<void> {
     this.isCracked = true;
-    await this.signalRService.buzz();
+    try {
+      await this.signalRService.buzz();
+    } catch (err: any) {
+      console.error('Buzz error:', err);
+      this.isCracked = false;
+      const errMsg = err?.message || 'عذراً، لم يتم قبول الضغطة. حاول مجدداً.';
+      this.signalRService.statusMessage$.next({ text: `⚠️ ${errMsg}`, isError: true });
+    }
   }
 
   async onJudge(isCorrect: boolean): Promise<void> {

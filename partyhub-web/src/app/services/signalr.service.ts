@@ -77,11 +77,28 @@ export class SignalRService {
 
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(hubUrl, {
+        headers: {
+          'Bypass-Tunnel-Reminder': 'true',
+          'ngrok-skip-browser-warning': 'true'
+        },
         transport: signalR.HttpTransportType.WebSockets | signalR.HttpTransportType.LongPolling,
       })
-      .withAutomaticReconnect([0, 2000, 5000, 10000, 30000])
+      .withAutomaticReconnect([0, 1000, 2000, 5000, 10000])
       .configureLogging(signalR.LogLevel.Information)
       .build();
+
+    this.hubConnection.onreconnected(async (connectionId) => {
+      console.log('SignalR reconnected with connectionId:', connectionId);
+      const roomCode = this.currentRoomCode;
+      const nickname = this.currentNickname$.value;
+      if (roomCode && nickname && this.hubConnection) {
+        try {
+          await this.hubConnection.invoke('RejoinRoom', roomCode, nickname);
+        } catch (e) {
+          console.warn('RejoinRoom failed after reconnect:', e);
+        }
+      }
+    });
 
 
     // SignalR Event Handlers
