@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  hubUrl: 'https://partyhub-backend.onrender.com/gameHub'
+  hubUrl: 'https://realty-directions-petite-missed.trycloudflare.com/gameHub'
 };
+
