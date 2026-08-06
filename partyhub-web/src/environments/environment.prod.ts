@@ -1,5 +1,7 @@
 export const environment = {
   production: true,
-  hubUrl: 'https://realty-directions-petite-missed.trycloudflare.com/gameHub'
+  hubUrl: 'https://cheaper-regression-attitude-marvel.trycloudflare.com/gameHub'
+  // hubUrl: 'http://localhost:5185/gameHub'
+
 };
 
