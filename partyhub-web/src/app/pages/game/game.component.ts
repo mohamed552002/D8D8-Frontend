@@ -578,9 +578,13 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   isLockedOut(): boolean {
-    const myId = this.signalRService.connectionId;
-    const myNickname = this.signalRService.currentNickname$.value;
-    const isMeLocked = this.lockedOutIds.some(id => id === myId || id === myNickname);
+    const myId = this.signalRService.connectionId?.toLowerCase();
+    const myNickname = this.signalRService.currentNickname$.value?.toLowerCase();
+    const isMeLocked = this.lockedOutIds.some(id => {
+      if (!id) return false;
+      const lower = id.toLowerCase();
+      return (!!myId && lower === myId) || (!!myNickname && lower === myNickname);
+    });
 
     if (isMeLocked) return true;
 
