@@ -209,7 +209,7 @@ import { GameSession, PlayerScoreDto, QuestionDto, GameSummaryDto } from '../../
                 <span style="font-size: 1.3rem;">⏱️ {{ (timerSeconds$ | async) }} ثوانٍ</span>
               </div>
 
-              <p class="status" style="margin-top: 0.5rem;">
+              <p *ngIf="getHostStatusText()" class="status" style="margin-top: 0.5rem;">
                 {{ getHostStatusText() }}
               </p>
             </div>
@@ -403,8 +403,8 @@ import { GameSession, PlayerScoreDto, QuestionDto, GameSummaryDto } from '../../
           </div>
         </div>
 
-        <div *ngIf="status$ | async as status" class="status" [ngClass]="{ 'error': status.isError }" style="margin-top: 1rem;">
-          {{ status.text }}
+        <div *ngIf="(status$ | async)?.text as statusText" class="status" [ngClass]="{ 'error': (status$ | async)?.isError }" style="margin-top: 1rem;">
+          {{ statusText }}
         </div>
       </main>
     </div>

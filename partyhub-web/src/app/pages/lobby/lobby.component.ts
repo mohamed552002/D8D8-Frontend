@@ -105,8 +105,8 @@ import { SignalRService } from '../../services/signalr.service';
             </ul>
           </div>
 
-          <div *ngIf="status$ | async as status" class="status" [ngClass]="{ 'error': status.isError }">
-            {{ status.text }}
+          <div *ngIf="(status$ | async)?.text as statusText" class="status" [ngClass]="{ 'error': (status$ | async)?.isError }">
+            {{ statusText }}
           </div>
         </div>
       </main>
