@@ -455,10 +455,12 @@ export class GameComponent implements OnInit, OnDestroy {
       this.signalRService.gameSession$.subscribe(session => {
         this.currentSession = session;
 
-        if (!session?.buzzWinnerId) {
+        if (!session?.buzzWinnerId && !session?.buzzWinnerName) {
           this.isCracked = false;
         } else if (this.isMeAnswering()) {
           this.isCracked = true;
+        } else {
+          this.isCracked = false;
         }
       }),
       this.signalRService.gameSummary$.subscribe(summary => {
@@ -466,12 +468,15 @@ export class GameComponent implements OnInit, OnDestroy {
       }),
       this.signalRService.buzzOpen$.subscribe(open => {
         this.buzzOpen = open;
-        if (open && !this.currentSession?.buzzWinnerId) {
+        if (open && (!this.currentSession || !this.currentSession.buzzWinnerId)) {
           this.isCracked = false;
         }
       }),
       this.signalRService.lockedOutPlayerIds$.subscribe(ids => {
         this.lockedOutIds = ids ?? [];
+        if (!this.currentSession?.buzzWinnerId) {
+          this.isCracked = false;
+        }
       }),
       this.signalRService.timerSeconds$.subscribe(seconds => {
         if (seconds === 0) {

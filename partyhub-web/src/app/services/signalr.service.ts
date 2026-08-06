@@ -204,6 +204,14 @@ export class SignalRService {
     // Judgment Events
     const handleJudgment = (playerId: string, isCorrect: boolean, newScore: number) => {
       const isMe = playerId === this.connectionId || playerId === this.currentNickname$.value;
+      if (this.gameSession$.value) {
+        const current = this.gameSession$.value;
+        this.gameSession$.next({
+          ...current,
+          buzzWinnerId: null,
+          buzzWinnerName: null
+        });
+      }
       if (isCorrect) {
         this.statusMessage$.next({
           text: isMe ? '🎉 إجابة صحيحة! (+1 نقطة)' : `✅ إجابة صحيحة من اللاعب (+1 نقطة). تم إعادة فتح الـ Buzz.`,
@@ -244,6 +252,15 @@ export class SignalRService {
       this.lockedOutPlayerIds$.next(lockedOutIds ?? []);
       this.buzzOpen$.next(true);
       this.timerSeconds$.next(null);
+      if (this.gameSession$.value) {
+        const current = this.gameSession$.value;
+        this.gameSession$.next({
+          ...current,
+          buzzWinnerId: null,
+          buzzWinnerName: null,
+          lockedOutPlayerIds: lockedOutIds ?? []
+        });
+      }
       this.statusMessage$.next({ text: '🔔 تم إعادة فتح الـ Buzz للجميع!', isError: false });
     };
 
