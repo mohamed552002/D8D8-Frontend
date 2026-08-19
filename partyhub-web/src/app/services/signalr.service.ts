@@ -4,11 +4,14 @@ import { BehaviorSubject } from 'rxjs';
 import { Room, GameSession, Role, PlayerScoreDto, QuestionDto, GameSummaryDto } from '../models/game.models';
 import { environment } from '../../environments/environment';
 
+import { AudioService } from './audio.service';
+
 @Injectable({
   providedIn: 'root'
 })
 export class SignalRService {
   private hubConnection: signalR.HubConnection | null = null;
+  private audioService = new AudioService();
 
 
   public currentRoom$ = new BehaviorSubject<Room | null>(null);
@@ -102,7 +105,13 @@ export class SignalRService {
 
 
     // SignalR Event Handlers
+    let lastPlayerCount = 0;
     this.hubConnection.on('RoomUpdated', (room: Room) => {
+      const newCount = room?.players?.length ?? 0;
+      if (newCount > lastPlayerCount) {
+        this.audioService.playWelcomeSound();
+      }
+      lastPlayerCount = newCount;
       this.currentRoom$.next(room);
     });
 
@@ -122,6 +131,7 @@ export class SignalRService {
     });
 
     this.hubConnection.on('RoundStarted', (session: GameSession) => {
+      this.audioService.resetLoserSoundState();
       this.buzzOpen$.next(true);
       this.gameSession$.next(session);
       this.timerSeconds$.next(null);
@@ -156,10 +166,19 @@ export class SignalRService {
 
     this.hubConnection.on('OnGameEnded', (summary: GameSummaryDto) => {
       this.gameSummary$.next(summary);
+      const myNickname = this.currentNickname$.value;
+      if (myNickname && summary?.winnerNickname) {
+        if (myNickname.trim().toLowerCase() === summary.winnerNickname.trim().toLowerCase()) {
+          this.audioService.playWinnerSound();
+        } else {
+          this.audioService.playLoserSound();
+        }
+      }
       this.statusMessage$.next({ text: `🏆 انتهت اللعبة! الفائز: ${summary.winnerNickname}`, isError: false });
     });
 
     this.hubConnection.on('OnSessionReset', (activePlayers: any[]) => {
+      this.audioService.resetLoserSoundState();
       this.gameSummary$.next(null);
       this.currentQuestionDto$.next(null);
       this.timerSeconds$.next(null);
@@ -181,6 +200,7 @@ export class SignalRService {
     this.hubConnection.on('BuzzWinner', (session: GameSession) => {
       this.buzzOpen$.next(true);
       this.gameSession$.next(session);
+      this.audioService.playBuzzSound();
       if (session.buzzWinnerName) {
         this.statusMessage$.next({ text: `⚡ الأسرع ضغطاً: ${session.buzzWinnerName}`, isError: false });
       }
@@ -218,6 +238,7 @@ export class SignalRService {
           isError: false
         });
       } else {
+        this.lockedOutPlayerIds$.next([]);
         this.statusMessage$.next({
           text: isMe ? '❌ إجابة خاطئة! (-1 نقطة)' : `❌ إجابة خاطئة (-1 نقطة). تم إعادة فتح الـ Buzz.`,
           isError: true

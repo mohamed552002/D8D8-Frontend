@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SignalRService } from '../../services/signalr.service';
+import { AudioService } from '../../services/audio.service';
 import { GameSession, PlayerScoreDto, QuestionDto, GameSummaryDto } from '../../models/game.models';
 
 @Component({
@@ -411,6 +412,7 @@ import { GameSession, PlayerScoreDto, QuestionDto, GameSummaryDto } from '../../
 })
 export class GameComponent implements OnInit, OnDestroy {
   private signalRService = inject(SignalRService);
+  private audioService = inject(AudioService);
   private router = inject(Router);
 
   role$ = this.signalRService.currentRole$;
@@ -454,6 +456,10 @@ export class GameComponent implements OnInit, OnDestroy {
       this.signalRService.gameSession$.subscribe(session => {
         this.currentSession = session;
 
+        if (session?.isEnded || session?.winnerNickname) {
+          this.checkAndPlayEndGameSound(session.winnerNickname);
+        }
+
         if (!session?.buzzWinnerId && !session?.buzzWinnerName) {
           this.isCracked = false;
         } else if (this.isMeAnswering()) {
@@ -464,6 +470,9 @@ export class GameComponent implements OnInit, OnDestroy {
       }),
       this.signalRService.gameSummary$.subscribe(summary => {
         this.gameSummary = summary;
+        if (summary?.winnerNickname) {
+          this.checkAndPlayEndGameSound(summary.winnerNickname);
+        }
       }),
       this.signalRService.buzzOpen$.subscribe(open => {
         this.buzzOpen = open;
@@ -508,6 +517,18 @@ export class GameComponent implements OnInit, OnDestroy {
     }
   }
 
+
+  private checkAndPlayEndGameSound(winnerNickname?: string | null): void {
+    const winner = winnerNickname || this.getWinnerName();
+    const myNickname = this.signalRService.currentNickname$.value;
+    if (myNickname && winner) {
+      if (myNickname.trim().toLowerCase() === winner.trim().toLowerCase()) {
+        this.audioService.playWinnerSound();
+      } else {
+        this.audioService.playLoserSound();
+      }
+    }
+  }
 
   isGameEnded(): boolean {
     const scores = this.signalRService.scoreboard$.value;
@@ -702,6 +723,7 @@ export class GameComponent implements OnInit, OnDestroy {
   async onBuzz(): Promise<void> {
     this.isCracked = true;
     try {
+      this.audioService.playBuzzSound();
       await this.signalRService.buzz();
     } catch (err: any) {
       console.error('Buzz error:', err);
