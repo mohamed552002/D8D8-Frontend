@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PartyHub - النتائج النهائية</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline": "#6e7980",
+                      "surface-container": "#eaeef3",
+                      "surface-bright": "#f5faff",
+                      "on-primary-fixed": "#001e2c",
+                      "surface-dim": "#d6dbdf",
+                      "on-tertiary": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "on-tertiary-fixed": "#3d0026",
+                      "on-secondary-fixed": "#00210c",
+                      "on-primary-fixed-variant": "#004c69",
+                      "on-surface-variant": "#3e484f",
+                      "surface-variant": "#dee3e8",
+                      "on-secondary-container": "#007439",
+                      "surface-container-low": "#eff4f9",
+                      "primary-fixed-dim": "#7bd0ff",
+                      "outline-variant": "#bdc8d1",
+                      "tertiary-container": "#ff8cc5",
+                      "on-error-container": "#93000a",
+                      "error": "#ba1a1a",
+                      "secondary": "#006d36",
+                      "surface": "#f5faff",
+                      "inverse-surface": "#2c3135",
+                      "inverse-primary": "#7bd0ff",
+                      "surface-container-highest": "#dee3e8",
+                      "on-secondary": "#ffffff",
+                      "tertiary-fixed": "#ffd8e7",
+                      "secondary-fixed": "#6dfe9c",
+                      "on-primary-container": "#004965",
+                      "secondary-fixed-dim": "#4de082",
+                      "surface-container-lowest": "#ffffff",
+                      "inverse-on-surface": "#edf1f6",
+                      "primary-container": "#38bdf8",
+                      "on-surface": "#171c20",
+                      "on-secondary-fixed-variant": "#005227",
+                      "primary-fixed": "#c4e7ff",
+                      "secondary-container": "#6dfe9c",
+                      "error-container": "#ffdad6",
+                      "on-tertiary-fixed-variant": "#85145a",
+                      "on-error": "#ffffff",
+                      "background": "#f5faff",
+                      "surface-container-high": "#e4e9ee",
+                      "tertiary": "#a43073",
+                      "surface-tint": "#00668a",
+                      "on-background": "#171c20",
+                      "tertiary-fixed-dim": "#ffafd3",
+                      "on-tertiary-container": "#811057",
+                      "primary": "#00668a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "lg": "40px",
+                      "margin-desktop": "auto",
+                      "md": "24px",
+                      "xl": "64px",
+                      "sm": "12px",
+                      "gutter": "20px",
+                      "base": "8px",
+                      "xs": "4px",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "body-md": ["Outfit"],
+                      "display-lg-mobile": ["Outfit"],
+                      "headline-md": ["Outfit"],
+                      "body-lg": ["Outfit"],
+                      "display-lg": ["Outfit"],
+                      "label-sm": ["Outfit"]
+              },
+              "fontSize": {
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-sm": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        body { font-family: 'Outfit', sans-serif; }
+        .glass-panel {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .podium-shadow {
+            box-shadow: 0 10px 15px -3px rgba(56, 189, 248, 0.2);
+        }
+        /* Floating animation for confetti */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-float-delayed { animation: float 7s ease-in-out 2s infinite; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col overflow-x-hidden">
+<!-- Ambient Confetti Background -->
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+<!-- Confetti pieces using theme colors -->
+<svg class="absolute top-20 left-10 w-12 h-12 fill-tertiary-container animate-float opacity-60" viewbox="0 0 24 24"><path d="M12,2L15,9L22,9L16,14L18,21L12,17L6,21L8,14L2,9L9,9L12,2Z"></path></svg>
+<svg class="absolute top-40 right-20 w-8 h-8 fill-primary-container animate-float-delayed opacity-60" viewbox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle></svg>
+<svg class="absolute top-1/4 left-1/3 w-10 h-10 fill-secondary-container animate-float opacity-50" viewbox="0 0 24 24"><rect height="16" rx="4" transform="rotate(45 12 12)" width="16" x="4" y="4"></rect></svg>
+<svg class="absolute bottom-1/3 right-1/4 w-14 h-14 fill-tertiary-container animate-float-delayed opacity-40" viewbox="0 0 24 24"><path d="M12,2L15,9L22,9L16,14L18,21L12,17L6,21L8,14L2,9L9,9L12,2Z"></path></svg>
+<svg class="absolute bottom-20 left-1/4 w-6 h-6 fill-primary-container animate-float opacity-70" viewbox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle></svg>
+</div>
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/70 backdrop-blur-md">
+<div class="flex justify-between items-center w-full px-lg py-md max-w-[1200px] mx-auto">
+<!-- Brand -->
+<div class="font-display-lg text-primary text-display-lg-mobile md:text-display-lg">
+                PartyHub
+            </div>
+<!-- Trailing Icons -->
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:scale-105 transition-transform duration-200">
+<span class="material-symbols-outlined" style="font-size: 28px;">group</span>
+</button>
+<button class="text-on-surface-variant hover:scale-105 transition-transform duration-200">
+<span class="material-symbols-outlined" style="font-size: 28px;">account_circle</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow z-10 pt-32 pb-xl px-margin-mobile md:px-margin-desktop w-full max-w-[1200px] mx-auto flex flex-col items-center">
+<!-- Header -->
+<div class="text-center mb-xl">
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-background mb-sm">النتائج النهائية</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">عمل رائع! إليك كيف انتهت المواجهة.</p>
+</div>
+<!-- Victory Podium (RTL Order: Rank 2 on Right, Rank 1 Center, Rank 3 on Left) -->
+<div class="flex justify-center items-end gap-sm md:gap-md w-full max-w-3xl mb-xl">
+<!-- 2nd Place -->
+<div class="flex flex-col items-center flex-1 z-10">
+<div class="relative mb-sm">
+<img class="w-16 h-16 md:w-24 md:h-24 rounded-full border-4 border-surface-container-high object-cover bg-white" data-alt="A cheerful 3D rendered avatar of a young gamer with silver headphones, bright modern lighting, soft pastels, friendly expression, clean light background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuArwTTS_fbplOHoDZargDA93RM4DbIvdPmhn_7cvLPJRmKqrfz6lx1NknhGxhGXqPcSIFOUkqxa3IcqrbXmiOjHtKiY471G8VTcOWC586Zr7ivxjFG0MZqQ5i9PdSjugDuPOxjFe1FFOv62sdSY1wcGzI0xC1O4NIil8iHSsiWvQyePG0hVK5tuJNqbtr-RndfMoqnFadWGQEsceiVbSk360g9OBPZqZllUlN_BGq3YXrJeKvvwQl9E"/>
+<div class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-surface-container-high text-on-surface font-label-sm text-label-sm px-3 py-1 rounded-full border border-white">
+                        2
+                    </div>
+</div>
+<div class="text-center mb-sm">
+<h3 class="font-headline-md text-headline-md text-on-background line-clamp-1">سارة</h3>
+<p class="font-body-md text-body-md text-primary font-bold">2,100</p>
+</div>
+<div class="w-full h-32 md:h-48 bg-surface-container-high rounded-t-xl flex justify-center pt-md transition-transform hover:scale-[1.02]">
+<span class="material-symbols-outlined text-outline-variant" style="font-size: 32px;">workspace_premium</span>
+</div>
+</div>
+<!-- 1st Place -->
+<div class="flex flex-col items-center flex-1 z-20">
+<div class="relative mb-sm">
+<span class="material-symbols-outlined absolute -top-10 left-1/2 transform -translate-x-1/2 text-primary-container animate-bounce" style="font-size: 48px; font-variation-settings: 'FILL' 1;">emoji_events</span>
+<img class="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-primary-container object-cover bg-white podium-shadow" data-alt="A victorious 3D rendered avatar of a gamer wearing a golden crown, highly detailed, joyful expression, bright studio lighting, soft color palette, premium modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9G0PfAzj8_VirImN9jI0jj6PGdbCQFXv-hbLE8PjAAN5oioDbVXAPGgPFyhguGRqwJhPh3DKQexkxaioetT3WP8LELl_qegEemVH5tS01vP0HOm8Frh9A7PhU6SMUo_i5avMNLL5k9rmSuML99Tfo_oo9UmdBpsJXucSjpN_krPkJtGR9xv1wWmudCTh86Kcy9hRpfvkatJDmaR0AoL34y0QWEH5ZOcLFLz77s-XFpllHl-Pc0JMp"/>
+<div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-primary-container text-on-primary-container font-label-sm text-label-sm px-4 py-1 rounded-full border-2 border-white shadow-sm">
+                        1
+                    </div>
+</div>
+<div class="text-center mb-sm mt-2">
+<h3 class="font-display-lg text-headline-md md:text-display-lg-mobile text-on-background line-clamp-1 font-bold">أحمد</h3>
+<p class="font-body-lg text-body-lg text-primary font-bold">3,450</p>
+</div>
+<div class="w-full h-48 md:h-64 bg-primary-container rounded-t-xl flex justify-center pt-md podium-shadow transition-transform hover:scale-[1.02]">
+<span class="material-symbols-outlined text-on-primary-container" style="font-size: 40px; font-variation-settings: 'FILL' 1;">stars</span>
+</div>
+</div>
+<!-- 3rd Place -->
+<div class="flex flex-col items-center flex-1 z-10">
+<div class="relative mb-sm">
+<img class="w-16 h-16 md:w-24 md:h-24 rounded-full border-4 border-tertiary-container object-cover bg-white" data-alt="A friendly 3D rendered avatar of a casual player with warm bronze-colored accessories, soft lighting, smiling, modern clean background, high resolution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuArFNEvM5LqDojn4iyaMQN6jENw1kbHSQi8j0kSjLgvqEybL8hx3B3mYseknXJWf2c9Hj-XYXGhuxxeeFNY6rcDI44zMKp9Slf97fvPUuQeZ4kJwU-q3ycWiP2wjHcNCY8xiOf43s1HMgE0pmov5y9QTafmJl-N6V3bqLsdEuYvBKfS0AScmuvsgLbDk3MFkEloo1djmoOXljFKPmRdL3L72YNjUmoP33kGKwq4rJVLLDBvxN-UHjKN"/>
+<div class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm px-3 py-1 rounded-full border border-white">
+                        3
+                    </div>
+</div>
+<div class="text-center mb-sm">
+<h3 class="font-headline-md text-headline-md text-on-background line-clamp-1">عمر</h3>
+<p class="font-body-md text-body-md text-primary font-bold">1,850</p>
+</div>
+<div class="w-full h-24 md:h-36 bg-tertiary-container rounded-t-xl flex justify-center pt-md transition-transform hover:scale-[1.02]">
+<span class="material-symbols-outlined text-on-tertiary-container opacity-80" style="font-size: 32px;">military_tech</span>
+</div>
+</div>
+</div>
+<!-- Match Stats Section (Glassmorphism Bento Grid style) -->
+<div class="w-full max-w-4xl glass-panel rounded-xl border border-surface-variant p-lg flex flex-col gap-md">
+<h2 class="font-headline-md text-headline-md text-on-background mb-sm">إحصائيات المباراة</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Stat Card: Accuracy -->
+<div class="bg-surface-container-lowest rounded-lg p-md border border-surface-container flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container">track_changes</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">الدقة العامة</p>
+<p class="font-headline-md text-headline-md text-on-background">87%</p>
+</div>
+</div>
+<div class="text-secondary font-body-md text-body-md flex items-center">
+<span class="material-symbols-outlined" style="font-size: 16px;">arrow_upward</span>
+<span>12%</span>
+</div>
+</div>
+<!-- Stat Card: Speed -->
+<div class="bg-surface-container-lowest rounded-lg p-md border border-surface-container flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed">timer</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">متوسط سرعة الإجابة</p>
+<p class="font-headline-md text-headline-md text-on-background">3.2 ث</p>
+</div>
+</div>
+<div class="text-primary font-body-md text-body-md flex items-center">
+<span class="material-symbols-outlined" style="font-size: 16px;">bolt</span>
+<span>سريع</span>
+</div>
+</div>
+</div>
+<!-- Action Button -->
+<div class="mt-md flex justify-center w-full">
+<button class="bg-primary-container text-on-primary-container font-label-sm text-label-sm px-xl py-md rounded-full hover:scale-105 transition-transform duration-200 flex items-center gap-sm">
+                    العودة للرئيسية
+                    <span class="material-symbols-outlined">home</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-md bg-transparent mt-auto z-10">
+<div class="flex flex-col md:flex-row justify-center items-center gap-md w-full max-w-[1200px] mx-auto px-lg">
+<span class="font-label-sm text-label-sm text-on-surface-variant">
+                © 2024 PartyHub Trivia • Made with joy
+            </span>
+<div class="flex gap-md">
+<a class="font-label-sm text-label-sm text-outline hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">About</a>
+<a class="font-label-sm text-label-sm text-outline hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Rules</a>
+<a class="font-label-sm text-label-sm text-outline hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Support</a>
+</div>
+</div>
+</footer>
+</body></html>

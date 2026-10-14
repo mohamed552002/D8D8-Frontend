@@ -13,44 +13,68 @@ import { GameSession, PlayerScoreDto, QuestionDto, GameSummaryDto } from '../../
   imports: [CommonModule, FormsModule],
 
   template: `
-    <div class="shell">
-      <main class="panel" style="max-width: 850px;">
+    <div class="min-h-screen flex flex-col bg-background text-on-background relative overflow-x-hidden">
 
-        <!-- End Game Confirmation Modal Popup -->
-        <div *ngIf="showEndGameModal" class="modal-overlay">
-          <div class="modal-card">
-            <h3 style="font-size: 1.6rem; color: #FFFFFF; font-weight: 900; margin-bottom: 0.8rem;">
-              🏁 تأكيد إنهاء اللعبة
-            </h3>
-            <p style="font-size: 1.1rem; color: #D3D3D3; margin-bottom: 1.8rem;">
-              هل أنت متأكد من إنهاء اللعبة الآن وعرض منصة الفائزين والتتويج؟
-            </p>
-            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-              <button
-                type="button"
-                class="btn-wrong"
-                style="font-size: 1.05rem; padding: 0.8rem 1.6rem; background: #E94E77;"
-                (click)="confirmEndGame()"
-              >
-                نعم، إنهاء اللعبة 🏁
-              </button>
-              <button
-                type="button"
-                class="btn-secondary"
-                style="font-size: 1.05rem; padding: 0.8rem 1.6rem;"
-                (click)="cancelEndGame()"
-              >
-                إلغاء ❌
-              </button>
-            </div>
+      <!-- Top App Bar (Sticky Header) -->
+      <header class="bg-surface/90 backdrop-blur-md sticky top-0 z-50 px-md py-sm flex justify-between items-center border-b border-outline-variant/30 shadow-sm">
+        <div class="flex items-center gap-md">
+          <h1 class="font-display-lg-mobile text-2xl font-bold text-primary tracking-tight">دغ دغ • PartyHub</h1>
+          <span *ngIf="(room$ | async)?.code as code" class="bg-primary-container/20 text-on-primary-container px-sm py-xs rounded-full font-label-sm text-sm font-semibold flex items-center gap-xs">
+            <span class="material-symbols-outlined text-sm">meeting_room</span>
+            <span>رمز الغرفة: </span>
+            <span class="font-mono text-primary font-bold tracking-wider">{{ code }}</span>
+          </span>
+        </div>
+        <div class="flex items-center gap-sm">
+          <button (click)="onLeaveGame()" type="button" class="flex items-center gap-xs text-on-surface-variant hover:text-error transition-colors px-sm py-xs rounded-full hover:bg-error-container/20">
+            <span class="material-symbols-outlined text-sm">logout</span>
+            <span class="font-label-sm text-label-sm hidden sm:inline">مغادرة</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- End Game Confirmation Modal Popup -->
+      <div *ngIf="showEndGameModal" class="modal-overlay">
+        <div class="modal-card">
+          <span class="material-symbols-outlined text-error" style="font-size: 48px; margin-bottom: 0.5rem;">flag</span>
+          <h3 style="font-size: 1.6rem; color: var(--on-surface); font-weight: 800; margin-bottom: 0.6rem;">
+            تأكيد إنهاء اللعبة
+          </h3>
+          <p style="font-size: 1.05rem; color: var(--on-surface-variant); margin-bottom: 1.8rem;">
+            هل أنت متأكد من إنهاء اللعبة الآن والتكريم على منصة التتويج؟
+          </p>
+          <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <button
+              type="button"
+              class="btn-wrong"
+              style="font-size: 1.05rem; padding: 0.8rem 1.6rem;"
+              (click)="confirmEndGame()"
+            >
+              <span class="material-symbols-outlined">check</span>
+              <span>نعم، إنهاء اللعبة</span>
+            </button>
+            <button
+              type="button"
+              class="btn-secondary"
+              style="font-size: 1.05rem; padding: 0.8rem 1.6rem;"
+              (click)="cancelEndGame()"
+            >
+              <span class="material-symbols-outlined">close</span>
+              <span>إلغاء</span>
+            </button>
           </div>
         </div>
+      </div>
+
+      <!-- Main Canvas Container -->
+      <main class="flex-1 max-w-6xl w-full mx-auto p-md md:p-lg flex flex-col gap-lg pb-24 md:pb-lg">
 
         <!-- Standalone Game Over Victory Screen with 3-Place Podium -->
-        <div *ngIf="isGameEnded()" class="victory-screen">
-          <div class="question-card" style="text-align: center; padding: 2.5rem 1.5rem; border-radius: 24px; background: linear-gradient(135deg, var(--primary-electric), #8B5CF6); border: 2px solid var(--soft-lavender); box-shadow: 0 20px 40px rgba(27, 78, 245, 0.4);">
-            <h1 style="font-size: 2.8rem; color: #FFFFFF; font-weight: 900; margin-bottom: 0.3rem;">🏆 انتهت المباراة!</h1>
-            <p style="font-size: 1.6rem; color: var(--soft-lavender); font-weight: 900; margin-bottom: 1.5rem;">
+        <div *ngIf="isGameEnded()" class="victory-screen w-full">
+          <div class="glass-card text-center p-8 md:p-12 rounded-3xl shadow-sm">
+            <span class="material-symbols-outlined text-primary text-6xl mb-2">emoji_events</span>
+            <h1 class="font-display-lg text-4xl font-bold text-on-surface mb-2">انتهت المباراة!</h1>
+            <p class="font-headline-md text-2xl font-bold text-primary mb-8">
               🎉 الفائز المستحق بالتحدي: {{ getWinnerName() }}
             </p>
 
@@ -59,147 +83,148 @@ import { GameSession, PlayerScoreDto, QuestionDto, GameSummaryDto } from '../../
 
               <!-- 2nd Place (Silver) -->
               <div *ngIf="getTopPodium()[1] as p2" class="podium-card rank-2">
-                <div style="font-size: 2.2rem; margin-bottom: 0.3rem;">🥈</div>
-                <div class="player-tag" style="background: #9CA3AF; color: white;">المركز الثاني</div>
-                <h3 style="font-size: 1.3rem; margin: 0.6rem 0 0.2rem 0; color: white;">{{ p2.nickname }}</h3>
-                <p style="font-size: 1.2rem; font-weight: 900; color: #9CA3AF; margin: 0;">{{ p2.score }} نقطة</p>
+                <span class="material-symbols-outlined text-4xl text-sky-600">workspace_premium</span>
+                <div class="player-tag bg-sky-100 text-sky-800 mt-2">المركز الثاني</div>
+                <h3 class="text-xl font-bold text-on-surface mt-2 mb-1">{{ p2.nickname }}</h3>
+                <p class="text-lg font-bold text-primary">{{ p2.score }} نقطة</p>
               </div>
 
               <!-- 1st Place (Gold) -->
               <div *ngIf="getTopPodium()[0] as p1" class="podium-card rank-1">
-                <div style="font-size: 3rem; margin-bottom: 0.3rem;">👑 🥇</div>
-                <div class="player-tag" style="background: #F59E0B; color: black; font-weight: 900;">البطل الأول</div>
-                <h2 style="font-size: 1.6rem; margin: 0.6rem 0 0.2rem 0; color: #FFF; font-weight: 900;">{{ p1.nickname }}</h2>
-                <p style="font-size: 1.4rem; font-weight: 900; color: #F59E0B; margin: 0;">{{ p1.score }} نقطة</p>
+                <span class="material-symbols-outlined text-5xl text-amber-500">military_tech</span>
+                <div class="player-tag bg-amber-100 text-amber-800 font-extrabold mt-2">البطل الأول 👑</div>
+                <h2 class="text-2xl font-extrabold text-on-surface mt-2 mb-1">{{ p1.nickname }}</h2>
+                <p class="text-xl font-extrabold text-amber-600">{{ p1.score }} نقطة</p>
               </div>
 
               <!-- 3rd Place (Bronze) -->
               <div *ngIf="getTopPodium()[2] as p3" class="podium-card rank-3">
-                <div style="font-size: 2.2rem; margin-bottom: 0.3rem;">🥉</div>
-                <div class="player-tag" style="background: #D97706; color: white;">المركز الثالث</div>
-                <h3 style="font-size: 1.3rem; margin: 0.6rem 0 0.2rem 0; color: white;">{{ p3.nickname }}</h3>
-                <p style="font-size: 1.2rem; font-weight: 900; color: #D97706; margin: 0;">{{ p3.score }} نقطة</p>
+                <span class="material-symbols-outlined text-4xl text-orange-600">emoji_events</span>
+                <div class="player-tag bg-orange-100 text-orange-800 mt-2">المركز الثالث</div>
+                <h3 class="text-xl font-bold text-on-surface mt-2 mb-1">{{ p3.nickname }}</h3>
+                <p class="text-lg font-bold text-orange-700">{{ p3.score }} نقطة</p>
               </div>
 
             </div>
 
             <!-- Detailed Final Summary Table -->
-            <div class="mini-leaderboard" style="margin-bottom: 2rem; text-align: right; background: rgba(11, 15, 25, 0.7); padding: 1.5rem; border-radius: 16px;">
-              <h4 class="leaderboard-title" style="font-size: 1.2rem;">📊 ملخص إحصائيات المباراة</h4>
+            <div class="mini-leaderboard mb-8 text-right p-6 rounded-2xl bg-surface-container-lowest">
+              <h4 class="leaderboard-title text-xl font-bold mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined">analytics</span>
+                <span>ملخص إحصائيات المباراة</span>
+              </h4>
               <ul class="leaderboard-list">
-                <li *ngFor="let s of (scoreboard$ | async)" class="leaderboard-item" style="padding: 0.8rem 1rem;">
-                  <span style="display: flex; align-items: center; gap: 0.8rem;">
+                <li *ngFor="let s of (scoreboard$ | async)" class="leaderboard-item p-3">
+                  <span class="flex items-center gap-3">
                     <span class="player-tag">#{{ s.rank }}</span>
-                    <span style="font-weight: 700; font-size: 1.1rem;">{{ s.nickname }}</span>
+                    <span class="font-bold text-lg">{{ s.nickname }}</span>
                   </span>
-                  <div style="display: flex; align-items: center; gap: 1.2rem;">
-                    <span style="font-size: 0.9rem; color: #10B981;">صح: {{ getCorrectCount(s.nickname) }}</span>
-                    <span style="font-size: 0.9rem; color: #EF4444;">خطأ: {{ getWrongCount(s.nickname) }}</span>
-                    <span class="player-score" style="font-size: 1.2rem; font-weight: 900;">{{ s.score }} نقطة</span>
+                  <div class="flex items-center gap-4">
+                    <span class="text-sm text-secondary font-bold">صح: {{ getCorrectCount(s.nickname) }}</span>
+                    <span class="text-sm text-error font-bold">خطأ: {{ getWrongCount(s.nickname) }}</span>
+                    <span class="player-score text-lg font-extrabold">{{ s.score }} نقطة</span>
                   </div>
                 </li>
               </ul>
             </div>
 
             <!-- Victory Action Controls -->
-            <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+            <div class="flex justify-center gap-4 flex-wrap">
               <button
                 *ngIf="(role$ | async) === 'host'"
                 type="button"
-                class="btn-primary"
-                style="font-size: 1.2rem; padding: 1rem 2rem; background: var(--primary-electric);"
+                class="btn-primary py-3 px-8 text-lg"
                 (click)="onRestartGame()"
               >
-                العب مرة ثانية 🔄
+                <span class="material-symbols-outlined">replay</span>
+                <span>العب مرة ثانية</span>
               </button>
 
               <button
                 type="button"
-                class="btn-secondary"
-                style="font-size: 1.2rem; padding: 1rem 2rem; background: rgba(255, 255, 255, 0.1); color: white; border-color: rgba(255, 255, 255, 0.3);"
+                class="btn-secondary py-3 px-8 text-lg"
                 (click)="onLeaveGame()"
               >
-                العودة للشاشة الرئيسية 🏠
+                <span class="material-symbols-outlined">home</span>
+                <span>العودة للشاشة الرئيسية</span>
               </button>
             </div>
           </div>
         </div>
 
         <!-- Active Game Play Area (Hidden when Game Ends) -->
-        <div *ngIf="!isGameEnded()">
-          <!-- Screen B: Host Controller Interface -->
-          <div *ngIf="(role$ | async) === 'host'" class="host-controller">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <h2 class="brand-title" style="font-size: 1.8rem; margin: 0;">لوحة المضيف</h2>
-                <p class="subtitle" style="margin: 0; font-size: 0.95rem;">
-                  🎯 هدف الفوز: <strong style="color: #FFD700; font-weight: 900;">{{ currentSession?.targetPoints || 10 }} نقاط</strong>
-                </p>
-              </div>
-              <button type="button" class="btn-secondary" (click)="onLeaveGame()">مغادرة</button>
-            </div>
+        <div *ngIf="!isGameEnded()" class="w-full">
 
-            <div class="question-card">
-              <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: 0.6rem;">
-                <div style="display: flex; align-items: center; gap: 0.5rem;">
-                  <span style="font-size: 0.95rem; font-weight: 700; color: var(--sky-blue);">🏷️ تصنيف الأسئلة:</span>
+          <!-- Screen B: Host Controller Interface (Design 10 & 15) -->
+          <div *ngIf="(role$ | async) === 'host'" class="host-controller flex flex-col gap-lg">
+            
+            <!-- Question Card Section (Full width 12-col main focus) -->
+            <section class="bg-surface-container-lowest/80 backdrop-blur-xl rounded-xl p-lg md:p-xl border border-outline-variant/30 shadow-sm flex flex-col items-center text-center relative overflow-hidden">
+              <!-- Decorative subtle background blob -->
+              <div class="absolute top-0 right-0 w-64 h-64 bg-primary-container/20 rounded-full blur-3xl -z-10 translate-x-1/2 -translate-y-1/2"></div>
+              
+              <!-- Header Bar with Category Tag & Target Points -->
+              <div class="w-full flex justify-between items-center flex-wrap gap-sm mb-md">
+                <div class="flex items-center gap-xs">
+                  <span class="text-sm font-bold text-primary">تصنيف الأسئلة:</span>
                   <select
-                    class="category-select-badge"
+                    class="bg-surface-container border border-outline-variant/40 rounded-lg px-3 py-1 font-body-md text-sm text-primary font-bold outline-none cursor-pointer"
                     [ngModel]="currentSession?.selectedCategory || 'جميع التصنيفات'"
                     (ngModelChange)="onChangeCategory($event)"
-                    style="background: rgba(20, 26, 45, 0.95); color: #FFD700; border: 1.5px solid var(--sky-blue); padding: 0.35rem 0.85rem; border-radius: 20px; font-weight: 800; font-size: 0.95rem; cursor: pointer; outline: none;"
                   >
                     <option value="جميع التصنيفات">جميع التصنيفات (كل المجالات)</option>
                     <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
                   </select>
                 </div>
-                <span class="player-tag" style="font-size: 0.85rem; background: rgba(255, 215, 0, 0.15); color: #FFD700; border-color: rgba(255, 215, 0, 0.4);">
-                  سؤال الجولة: {{ (currentQuestionDto$ | async)?.category || 'عامة' }}
-                </span>
+                <div class="bg-tertiary-fixed text-on-tertiary-fixed-variant px-md py-xs rounded-full font-label-sm text-label-sm inline-flex items-center gap-xs">
+                  <span class="material-symbols-outlined text-sm">flag</span>
+                  <span>هدف الفوز: {{ currentSession?.targetPoints || 10 }} نقطة</span>
+                </div>
               </div>
 
-
-              <h3 class="question-title" style="font-size: 1.5rem; margin: 0.8rem 0 0.5rem 0;">
+              <!-- Question Text -->
+              <h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface mt-sm max-w-3xl leading-tight">
                 {{ (currentQuestionDto$ | async)?.question || currentSession?.currentQuestion || 'استمع إلى السؤال من المضيف' }}
-              </h3>
+              </h2>
 
-              <!-- Dynamic Answer Display -->
-              <div class="answer-highlight-box">
-                💡 الإجابة الصحيحة: <span style="font-weight: 900;">{{ (currentQuestionDto$ | async)?.answer || currentSession?.currentAnswer || 'غير متاح' }}</span>
+              <!-- Answer Box -->
+              <div class="w-full max-w-2xl bg-primary-container/10 border border-primary-container/40 rounded-xl p-md mt-md text-center">
+                <p class="font-body-md text-on-surface-variant text-sm">الإجابة الصحيحة:</p>
+                <p class="font-headline-md text-primary mt-1 font-bold">{{ (currentQuestionDto$ | async)?.answer || currentSession?.currentAnswer || 'غير متاح' }}</p>
               </div>
 
-              <!-- Host Interactive Control Toggles for Hint & Question -->
-              <div style="margin-top: 1rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem;">
+              <!-- Host Interactive Control Toggles -->
+              <div class="flex flex-wrap justify-center gap-sm mt-md">
                 <button
                   *ngIf="(currentQuestionDto$ | async)?.hint"
                   type="button"
-                  class="btn-secondary"
-                  [style.background]="(isHintRevealed$ | async) ? 'rgba(244, 206, 255, 0.3)' : 'transparent'"
-                  style="font-size: 0.9rem; padding: 0.5rem 1rem; border-color: var(--soft-lavender); color: var(--soft-lavender);"
+                  class="btn-secondary py-2 px-4 text-sm"
+                  [style.background]="(isHintRevealed$ | async) ? 'rgba(56, 189, 248, 0.15)' : '#ffffff'"
                   (click)="onToggleHint()"
                 >
-                  {{ (isHintRevealed$ | async) ? 'إخفاء التلميح من شاشة اللاعبين 💡' : 'إظهار التلميح للاعبين 💡' }}
+                  <span class="material-symbols-outlined text-sm">lightbulb</span>
+                  <span>{{ (isHintRevealed$ | async) ? 'إخفاء التلميح من اللاعبين' : 'إظهار التلميح للاعبين' }}</span>
                 </button>
 
                 <button
                   type="button"
-                  class="btn-secondary"
-                  [style.background]="(isQuestionRevealed$ | async) ? 'rgba(56, 116, 255, 0.3)' : 'transparent'"
-                  style="font-size: 0.9rem; padding: 0.5rem 1rem; border-color: var(--sky-blue); color: #FFF;"
+                  class="btn-secondary py-2 px-4 text-sm"
+                  [style.background]="(isQuestionRevealed$ | async) ? 'rgba(56, 189, 248, 0.15)' : '#ffffff'"
                   (click)="onToggleQuestionVisibility()"
                 >
-                  {{ (isQuestionRevealed$ | async) ? 'إخفاء السؤال من شاشة اللاعبين 👁️' : 'إظهار السؤال على شاشة اللاعبين 👁️' }}
+                  <span class="material-symbols-outlined text-sm">visibility</span>
+                  <span>{{ (isQuestionRevealed$ | async) ? 'إخفاء السؤال من اللاعبين' : 'إظهار السؤال على شاشة اللاعبين' }}</span>
                 </button>
               </div>
 
-              <!-- Host Hint View Box: Always visible to host if hint exists -->
-              <div *ngIf="(currentQuestionDto$ | async)?.hint" class="hint-box">
+              <!-- Hint Box -->
+              <div *ngIf="(currentQuestionDto$ | async)?.hint" class="hint-box w-full max-w-2xl">
                 🔍 تلميح: {{ (currentQuestionDto$ | async)?.hint }}
-                <span *ngIf="isHintRevealed$ | async" style="color: #10B981; font-weight: 900; margin-right: 0.5rem;">(ظاهر الآن للاعبين ✅)</span>
+                <span *ngIf="isHintRevealed$ | async" class="text-secondary font-bold mr-2">(ظاهر الآن للاعبين ✅)</span>
               </div>
 
-              <!-- Server Synced Visual Timer Animation -->
-              <div *ngIf="(timerSeconds$ | async) !== null" class="timer-countdown" style="margin-top: 1rem;">
+              <!-- Timer Bar Countdown -->
+              <div *ngIf="(timerSeconds$ | async) !== null" class="timer-countdown w-full max-w-xl mt-lg">
                 <div class="timer-bar-container">
                   <div
                     class="timer-bar-fill"
@@ -207,159 +232,133 @@ import { GameSession, PlayerScoreDto, QuestionDto, GameSummaryDto } from '../../
                     [ngClass]="getTimerBarClass(timerSeconds$ | async)"
                   ></div>
                 </div>
-                <span style="font-size: 1.3rem;">⏱️ {{ (timerSeconds$ | async) }} ثوانٍ</span>
+                <span class="font-headline-md text-primary text-xl mt-1">⏱️ {{ (timerSeconds$ | async) }} ثوانٍ</span>
               </div>
 
-              <p *ngIf="getHostStatusText()" class="status" style="margin-top: 0.5rem;">
+              <!-- Status Banner -->
+              <p *ngIf="getHostStatusText()" class="status w-full max-w-2xl mt-md">
                 {{ getHostStatusText() }}
               </p>
-            </div>
 
-            <!-- Host Action Buttons -->
-            <div class="host-action-bar" style="display: flex; flex-direction: column; gap: 1rem;">
-              <!-- Active Buzz Judgment Group (When a player buzzed) -->
-              <div *ngIf="currentSession?.buzzWinnerId" style="display: flex; flex-wrap: wrap; gap: 0.8rem; width: 100%; justify-content: center; background: rgba(56, 116, 255, 0.1); padding: 1rem; border-radius: 16px; border: 1px solid var(--mid-blue);">
-                <button type="button" class="btn-correct" style="font-size: 1.1rem; padding: 0.9rem 1.6rem;" (click)="onJudge(true)">
-                  صح +1 ✅ (إعادة فتح Buzz)
-                </button>
-                <button type="button" class="btn-wrong" style="font-size: 1.1rem; padding: 0.9rem 1.6rem;" (click)="onJudge(false)">
-                  خطأ -1 ❌ (استبعاد وإعادة فتح)
-                </button>
-                <button type="button" class="btn-secondary" style="border-color: var(--sky-blue); color: var(--sky-blue); font-size: 1.1rem; padding: 0.9rem 1.6rem;" (click)="onReOpenBuzz()">
-                  إعادة فتح Buzz 🔄 (بدون نقاط)
-                </button>
+              <!-- Host Judgment & Action Controls -->
+              <div class="flex flex-wrap justify-center gap-md mt-lg w-full">
+                <!-- Active Buzz Winner Judgment -->
+                <div *ngIf="currentSession?.buzzWinnerId" class="w-full flex flex-wrap justify-center gap-md bg-primary-container/10 p-md rounded-xl border border-primary-container/30">
+                  <button type="button" class="flex items-center gap-sm bg-secondary-container text-on-secondary-container px-xl py-md rounded-lg font-headline-md text-headline-md hover:scale-105 transition-transform duration-200 shadow-active" (click)="onJudge(true)">
+                    <span class="material-symbols-outlined icon-fill">check_circle</span>
+                    <span>صح +1</span>
+                  </button>
+                  <button type="button" class="flex items-center gap-sm bg-error-container text-on-error-container px-xl py-md rounded-lg font-headline-md text-headline-md hover:scale-105 transition-transform duration-200" (click)="onJudge(false)">
+                    <span class="material-symbols-outlined icon-fill">cancel</span>
+                    <span>خطأ -1</span>
+                  </button>
+                  <button type="button" class="flex items-center gap-sm bg-surface-variant text-on-surface-variant px-xl py-md rounded-lg font-headline-md text-headline-md hover:scale-105 transition-transform duration-200" (click)="onReOpenBuzz()">
+                    <span class="material-symbols-outlined">restart_alt</span>
+                    <span>إعادة Buzzer</span>
+                  </button>
+                </div>
+
+                <!-- General Controls -->
+                <div class="w-full flex flex-wrap justify-center gap-sm mt-sm">
+                  <button type="button" class="btn-secondary" (click)="onReOpenBuzz()">
+                    <span class="material-symbols-outlined">lock_open</span>
+                    <span>فتح الـ Buzz</span>
+                  </button>
+                  <button type="button" class="btn-secondary" (click)="onSkipQuestion()">
+                    <span class="material-symbols-outlined">skip_next</span>
+                    <span>تخطي السؤال</span>
+                  </button>
+                  <button *ngIf="currentSession?.isAnswered" type="button" class="btn-correct" (click)="onNextRound()">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                    <span>السؤال التالي</span>
+                  </button>
+                  <button type="button" class="btn-wrong" (click)="onEndGameClick()">
+                    <span class="material-symbols-outlined">flag</span>
+                    <span>إنهاء اللعبة</span>
+                  </button>
+                </div>
               </div>
+            </section>
 
-              <!-- General Control Bar -->
-              <div style="display: flex; flex-wrap: wrap; gap: 0.8rem; width: 100%; justify-content: space-between; align-items: center;">
-
-                <!-- ReOpen Buzz Button: Always available to host during active round -->
-                <button
-                  type="button"
-                  class="btn-secondary"
-                  style="border-color: var(--sky-blue); color: var(--sky-blue); font-weight: 800;"
-                  (click)="onReOpenBuzz()"
-                >
-                  إعادة فتح الـ Buzz 🔄
-                </button>
-
-                <button
-                  type="button"
-                  class="btn-secondary"
-                  style="background: rgba(244, 206, 255, 0.15); color: var(--soft-lavender); border-color: var(--soft-lavender);"
-                  (click)="onSkipQuestion()"
-                >
-                  تخطي السؤال ⏭️
-                </button>
-
-                <!-- Next Question Button: Only visible after answering the question correctly -->
-                <button
-                  *ngIf="currentSession?.isAnswered"
-                  type="button"
-                  class="btn-secondary"
-                  style="background: rgba(16, 185, 129, 0.2); color: #10B981; border-color: #10B981;"
-                  (click)="onNextRound()"
-                >
-                  السؤال التالي ➡️
-                </button>
-
-                <!-- Explicit End Game Button with Confirmation Modal Trigger -->
-                <button
-                  type="button"
-                  class="btn-secondary"
-                  style="background: rgba(239, 68, 68, 0.15); color: #EF4444; border-color: #EF4444;"
-                  (click)="onEndGameClick()"
-                >
-                  إنهاء اللعبة 🏁
-                </button>
-              </div>
-            </div>
-
-            <!-- Live Scoreboard with Manual +/- Controls for Host -->
-            <div class="mini-leaderboard" style="margin-top: 1rem;">
-              <h4 class="leaderboard-title">🏆 لائحة المتصدرين وتعديل النقاط</h4>
-              <ul class="leaderboard-list">
-                <li *ngFor="let s of (scoreboard$ | async)" class="leaderboard-item" style="padding: 0.7rem 1rem;">
-                  <span style="display: flex; align-items: center; gap: 0.6rem;">
-                    <span class="player-tag">#{{ s.rank }}</span>
-                    <span style="font-weight: 700;">{{ s.nickname }}</span>
-                    <span *ngIf="s.lastScoreChange > 0" style="color: #10B981; font-weight: 900;">(+1)</span>
-                    <span *ngIf="s.lastScoreChange < 0" style="color: #EF4444; font-weight: 900;">(-1)</span>
-                  </span>
-
-                  <div style="display: flex; align-items: center; gap: 1rem;">
-                    <span class="player-score" style="font-size: 1.1rem; font-weight: 900;">{{ s.score }} نقطة</span>
-                    <div style="display: flex; gap: 0.3rem;">
-                      <button type="button" class="btn-correct" style="padding: 0.2rem 0.6rem; font-size: 0.9rem;" (click)="onAdjustScore(s.playerId, 1)">+1</button>
-                      <button type="button" class="btn-wrong" style="padding: 0.2rem 0.6rem; font-size: 0.9rem;" (click)="onAdjustScore(s.playerId, -1)">-1</button>
-                    </div>
+            <!-- Players Grid Section (Design 10 3D Cards Grid) -->
+            <section class="w-full">
+              <h3 class="font-headline-md text-headline-md text-on-surface mb-md">حالة اللاعبين</h3>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-md">
+                <div *ngFor="let s of (scoreboard$ | async)" class="bg-surface-container-lowest rounded-lg p-md border border-outline-variant/30 flex flex-col items-center text-center gap-sm relative overflow-hidden transition-all hover:-translate-y-1 shadow-sm">
+                  <div class="absolute top-0 right-0 bg-primary-container text-on-primary-container text-xs px-2 py-1 rounded-bl-lg font-bold">
+                    المركز #{{ s.rank }}
                   </div>
-                </li>
-              </ul>
-            </div>
+                  <div class="w-16 h-16 rounded-full overflow-hidden bg-primary-fixed flex items-center justify-center text-primary font-bold text-2xl mt-2">
+                    {{ s.nickname.charAt(0) }}
+                  </div>
+                  <div class="w-full">
+                    <p class="font-body-lg text-body-lg font-bold text-on-surface truncate">{{ s.nickname }}</p>
+                    <p class="font-label-sm text-label-sm text-primary font-bold mt-1">{{ s.score }} نقطة</p>
+                  </div>
+                  <div class="flex gap-1 mt-1">
+                    <button type="button" class="btn-correct py-1 px-3 text-xs" (click)="onAdjustScore(s.playerId, 1)">+1</button>
+                    <button type="button" class="btn-wrong py-1 px-3 text-xs" (click)="onAdjustScore(s.playerId, -1)">-1</button>
+                  </div>
+                </div>
+              </div>
+            </section>
           </div>
 
-          <!-- Screen A: Player Buzzer Interface -->
-          <div *ngIf="(role$ | async) === 'player'" class="player-view">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-              <div>
-                <span class="player-tag">شاشة اللاعب 📱</span>
-                <span style="margin-right: 0.8rem; font-size: 0.95rem; color: #FFD700; font-weight: 700;">
-                  🎯 هدف الفوز: {{ currentSession?.targetPoints || 10 }} نقاط
-                </span>
+          <!-- Screen A: Player Buzzer Interface (Design 11 Mobile/Desktop Grid) -->
+          <div *ngIf="(role$ | async) === 'player'" class="player-view grid grid-cols-1 md:grid-cols-12 gap-lg w-full">
+            
+            <!-- Buzzer Focus Area (md:col-span-8) -->
+            <section class="md:col-span-8 flex flex-col items-center justify-center min-h-[500px] bg-surface-container-lowest rounded-xl border border-outline-variant/30 relative p-lg md:p-xl shadow-sm">
+              
+              <!-- Timer Bar -->
+              <div *ngIf="(timerSeconds$ | async) !== null" class="w-full max-w-md mb-lg">
+                <div class="flex justify-between items-end mb-xs">
+                  <span class="font-label-sm text-label-sm text-on-surface-variant">الوقت المتبقي</span>
+                  <span class="font-headline-md text-headline-md text-primary">{{ (timerSeconds$ | async) }}ث</span>
+                </div>
+                <div class="h-3 bg-surface-container rounded-full overflow-hidden w-full relative">
+                  <div
+                    class="absolute right-0 top-0 h-full bg-secondary-container transition-all duration-200"
+                    [style.width.%]="getTimerPercentage(timerSeconds$ | async)"
+                  ></div>
+                </div>
               </div>
-              <button type="button" class="btn-secondary" (click)="onLeaveGame()">مغادرة</button>
-            </div>
 
-            <!-- Broadcasted Question Text Box on Player View (When Host Toggles Question Reveal) -->
-            <div *ngIf="isQuestionRevealed$ | async" class="question-card" style="margin-bottom: 1.2rem; background: rgba(27, 78, 245, 0.2); border: 2px solid var(--primary-electric); text-align: center; padding: 1.2rem;">
-              <span class="category-badge" style="margin-bottom: 0.5rem;">
-                🏷️ {{ (currentQuestionDto$ | async)?.category || 'معلومات عامة' }}
-              </span>
-              <h3 style="font-size: 1.4rem; color: #FFFFFF; font-weight: 900; margin: 0.4rem 0 0 0;">
-                ❓ {{ (revealedQuestionText$ | async) || (currentQuestionDto$ | async)?.question || currentSession?.currentQuestion }}
-              </h3>
-            </div>
-
-            <div class="player-buzzer-container" [ngClass]="getBuzzerContainerClass()">
-              <!-- State 3: Locked Out Overlay -->
-
-              <!-- State 2: Celebration Badge -->
-              <div *ngIf="isMeAnswering() || isCracked" class="celebration-badge">
+              <!-- Celebration Badge -->
+              <div *ngIf="isMeAnswering() || isCracked" class="celebration-badge mb-md">
                 🎉 دورك للإجابة!
               </div>
 
-              <!-- State 1: Giant Circular Buzzer Button -->
-              <p class="subtitle" style="text-align: center; margin-bottom: 0.8rem;">
+              <!-- Player Instruction Text -->
+              <p class="font-headline-md text-on-surface text-center mb-md">
                 {{ getPlayerInstruction() }}
               </p>
 
-              <!-- Category Badge for Player (When Question text is not toggled) -->
-              <div *ngIf="!(isQuestionRevealed$ | async)" style="text-align: center; margin-bottom: 1rem;">
-                <span class="category-badge">
-                  🏷️ {{ (currentQuestionDto$ | async)?.category || 'معلومات عامة' }}
-                </span>
+              <!-- Question Reveal Box (When Toggled by Host) -->
+              <div *ngIf="isQuestionRevealed$ | async" class="glass-card p-4 rounded-xl text-center mb-md w-full max-w-md">
+                <span class="category-badge mb-1">🏷️ {{ (currentQuestionDto$ | async)?.category || 'معلومات عامة' }}</span>
+                <h3 class="font-headline-md text-on-surface mt-1">❓ {{ (revealedQuestionText$ | async) || (currentQuestionDto$ | async)?.question || currentSession?.currentQuestion }}</h3>
               </div>
 
-              <!-- Broadcasted Hint Box on Player View (When Host Toggles Hint) -->
-              <div *ngIf="isHintRevealed$ | async" class="hint-box" style="margin-bottom: 1.2rem; text-align: center;">
+              <!-- Broadcasted Hint Box -->
+              <div *ngIf="isHintRevealed$ | async" class="hint-box w-full max-w-md mb-md text-center">
                 🔍 تلميح: {{ (revealedHintText$ | async) || (currentQuestionDto$ | async)?.hint }}
               </div>
 
-              <!-- Giant Circular Buzzer Button with First Version Glass Crack Animation -->
+              <!-- Giant Circular Buzzer Button (Design 11 Style) -->
               <button
                 type="button"
-                class="buzzer-btn"
+                class="w-64 h-64 rounded-full bg-primary-container text-on-primary-container flex flex-col items-center justify-center buzzer-btn transition-all duration-300 group focus:outline-none focus:ring-4 focus:ring-primary-fixed-dim"
                 [disabled]="isBuzzerDisabled() && !isMeAnswering() && !isCracked"
                 [ngClass]="{
-                  'disabled': isBuzzerDisabled() && !isMeAnswering() && !isCracked,
+                  'disabled opacity-50 grayscale': isBuzzerDisabled() && !isMeAnswering() && !isCracked,
                   'is-cracked': isMeAnswering() || isCracked
                 }"
                 (click)="onBuzz()"
               >
-                <!-- First Version Glass Crack Lines SVG Overlay -->
+                <!-- Glass Crack Overlay -->
                 <svg *ngIf="isMeAnswering() || isCracked" class="crack-overlay" viewBox="0 0 200 200">
-                  <g stroke="#FFFFFF" stroke-width="0.5" stroke-linecap="round" fill="none">
+                  <g stroke="#ffffff" stroke-width="0.5" stroke-linecap="round" fill="none">
                     <path d="M100 100 L20 15 M100 100 L180 25 M100 100 L190 130 M100 100 L130 190 M100 100 L25 170 M100 100 L10 85"/>
                     <path d="M20 15 L60 45 M180 25 L140 65 M180 120 L140 125 M130 190 L95 145 M25 170 L65 120 M10 85 L55 75"/>
                     <path d="M60 45 L90 20 M140 65 L170 95 M140 125 L165 160 M95 145 L60 180 M65 120 L30 135 M55 75 L20 50" stroke-width="2.5"/>
@@ -367,46 +366,64 @@ import { GameSession, PlayerScoreDto, QuestionDto, GameSummaryDto } from '../../
                 </svg>
 
                 <div class="buzzer-content">
-                  <span class="palm-icon">👊</span>
-                  <span class="buzzer-text">دغ دغ</span>
+                  <span class="text-5xl group-hover:scale-110 transition-transform mb-1">👊</span>
+                  <span class="font-display-lg text-3xl font-extrabold">دغ دغ</span>
                 </div>
               </button>
 
-              <!-- Visual Animated Countdown Bar -->
-              <div *ngIf="(timerSeconds$ | async) !== null" class="timer-countdown">
-                <div class="timer-bar-container">
-                  <div
-                    class="timer-bar-fill"
-                    [style.width.%]="getTimerPercentage(timerSeconds$ | async)"
-                    [ngClass]="getTimerBarClass(timerSeconds$ | async)"
-                  ></div>
-                </div>
-                <span style="font-size: 1.3rem;">⏱️ {{ (timerSeconds$ | async) }} ثوانٍ</span>
+              <!-- Floating Chips -->
+              <div class="absolute top-md left-md bg-tertiary-container/30 text-on-tertiary-container px-sm py-xs rounded-full font-label-sm text-label-sm flex items-center gap-xs">
+                <span class="material-symbols-outlined text-sm">flag</span>
+                <span>هدف الفوز: {{ currentSession?.targetPoints || 10 }}</span>
               </div>
-            </div>
+              <div class="absolute bottom-md right-md bg-secondary-container/30 text-on-secondary-container px-sm py-xs rounded-full font-label-sm text-label-sm flex items-center gap-xs">
+                <span class="material-symbols-outlined text-sm">category</span>
+                <span>{{ (currentQuestionDto$ | async)?.category || 'عامة' }}</span>
+              </div>
+            </section>
 
-            <!-- Live Scoreboard for Player -->
-            <div class="mini-leaderboard" style="margin-top: 1.5rem;">
-              <h4 class="leaderboard-title">🏆 نتائج المتصدرين والترتيب</h4>
-              <ul class="leaderboard-list">
-                <li *ngFor="let s of (scoreboard$ | async)" class="leaderboard-item">
-                  <span style="display: flex; align-items: center; gap: 0.6rem;">
-                    <span class="player-tag">#{{ s.rank }}</span>
-                    <span style="font-weight: 700;">{{ s.nickname }}</span>
-                    <span *ngIf="s.lastScoreChange > 0" style="color: #10B981; font-weight: 900;">(+1)</span>
-                    <span *ngIf="s.lastScoreChange < 0" style="color: #EF4444; font-weight: 900;">(-1)</span>
-                  </span>
-                  <span class="player-score" style="font-size: 1.1rem; font-weight: 900;">{{ s.score }} نقطة</span>
-                </li>
-              </ul>
-            </div>
+            <!-- Leaderboard Sidebar (md:col-span-4) -->
+            <aside class="md:col-span-4 flex flex-col gap-md">
+              <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-md flex flex-col gap-sm h-full shadow-sm">
+                <h2 class="font-headline-md text-headline-md text-primary mb-sm border-b border-outline-variant/30 pb-sm flex items-center gap-2">
+                  <span class="material-symbols-outlined">leaderboard</span>
+                  <span>أعلى اللاعبين</span>
+                </h2>
+                <div *ngFor="let s of (scoreboard$ | async)" class="flex items-center gap-sm p-sm rounded-lg hover:bg-surface-container-low transition-colors border border-outline-variant/20">
+                  <div class="w-10 h-10 rounded-full bg-primary-fixed text-primary font-bold flex items-center justify-center flex-shrink-0">
+                    {{ s.nickname.charAt(0) }}
+                  </div>
+                  <div class="flex-1 flex flex-col">
+                    <span class="font-label-sm text-label-sm text-on-surface font-bold">{{ s.nickname }}</span>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant text-xs">المركز #{{ s.rank }}</span>
+                  </div>
+                  <div class="font-headline-md text-headline-md text-primary font-bold">{{ s.score }}</div>
+                </div>
+              </div>
+            </aside>
           </div>
         </div>
 
-        <div *ngIf="(status$ | async)?.text as statusText" class="status" [ngClass]="{ 'error': (status$ | async)?.isError }" style="margin-top: 1rem;">
+        <div *ngIf="(status$ | async)?.text as statusText" class="status mt-md" [ngClass]="{ 'error': (status$ | async)?.isError }">
           {{ statusText }}
         </div>
       </main>
+
+      <!-- Bottom Mobile Navigation Bar -->
+      <nav class="md:hidden fixed bottom-0 w-full z-50 rounded-t-xl backdrop-blur-xl bg-surface/90 shadow-[0_-4px_12px_rgba(56,189,248,0.15)] flex flex-row-reverse justify-around items-center px-2 py-3 border-t border-outline-variant/20">
+        <a (click)="onLeaveGame()" class="flex flex-col items-center justify-center text-on-surface-variant p-2 rounded-lg cursor-pointer">
+          <span class="material-symbols-outlined mb-1">home</span>
+          <span class="font-label-sm text-xs">الرئيسية</span>
+        </a>
+        <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1.5 shadow-sm cursor-pointer">
+          <span class="material-symbols-outlined mb-1">sports_esports</span>
+          <span class="font-label-sm text-xs">المباراة</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant p-2 rounded-lg cursor-pointer">
+          <span class="material-symbols-outlined mb-1">emoji_events</span>
+          <span class="font-label-sm text-xs">النتائج</span>
+        </a>
+      </nav>
     </div>
   `
 })
@@ -415,6 +432,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private audioService = inject(AudioService);
   private router = inject(Router);
 
+  room$ = this.signalRService.currentRoom$;
   role$ = this.signalRService.currentRole$;
   status$ = this.signalRService.statusMessage$;
   timerSeconds$ = this.signalRService.timerSeconds$;

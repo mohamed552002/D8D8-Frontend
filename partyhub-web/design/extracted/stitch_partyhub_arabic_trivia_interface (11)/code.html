@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PartyHub - Player Buzzer View</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline": "#6e7980",
+                      "surface-container": "#eaeef3",
+                      "surface-bright": "#f5faff",
+                      "on-primary-fixed": "#001e2c",
+                      "surface-dim": "#d6dbdf",
+                      "on-tertiary": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "on-tertiary-fixed": "#3d0026",
+                      "on-secondary-fixed": "#00210c",
+                      "on-primary-fixed-variant": "#004c69",
+                      "on-surface-variant": "#3e484f",
+                      "surface-variant": "#dee3e8",
+                      "on-secondary-container": "#007439",
+                      "surface-container-low": "#eff4f9",
+                      "primary-fixed-dim": "#7bd0ff",
+                      "outline-variant": "#bdc8d1",
+                      "tertiary-container": "#ff8cc5",
+                      "on-error-container": "#93000a",
+                      "error": "#ba1a1a",
+                      "secondary": "#006d36",
+                      "surface": "#f5faff",
+                      "inverse-surface": "#2c3135",
+                      "inverse-primary": "#7bd0ff",
+                      "surface-container-highest": "#dee3e8",
+                      "on-secondary": "#ffffff",
+                      "tertiary-fixed": "#ffd8e7",
+                      "secondary-fixed": "#6dfe9c",
+                      "on-primary-container": "#004965",
+                      "secondary-fixed-dim": "#4de082",
+                      "surface-container-lowest": "#ffffff",
+                      "inverse-on-surface": "#edf1f6",
+                      "primary-container": "#38bdf8",
+                      "on-surface": "#171c20",
+                      "on-secondary-fixed-variant": "#005227",
+                      "primary-fixed": "#c4e7ff",
+                      "secondary-container": "#6dfe9c",
+                      "error-container": "#ffdad6",
+                      "on-tertiary-fixed-variant": "#85145a",
+                      "on-error": "#ffffff",
+                      "background": "#f5faff",
+                      "surface-container-high": "#e4e9ee",
+                      "tertiary": "#a43073",
+                      "surface-tint": "#00668a",
+                      "on-background": "#171c20",
+                      "tertiary-fixed-dim": "#ffafd3",
+                      "on-tertiary-container": "#811057",
+                      "primary": "#00668a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "lg": "40px",
+                      "margin-desktop": "auto",
+                      "md": "24px",
+                      "xl": "64px",
+                      "sm": "12px",
+                      "gutter": "20px",
+                      "base": "8px",
+                      "xs": "4px",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Outfit"
+                      ],
+                      "display-lg-mobile": [
+                              "Outfit"
+                      ],
+                      "headline-md": [
+                              "Outfit"
+                      ],
+                      "body-lg": [
+                              "Outfit"
+                      ],
+                      "display-lg": [
+                              "Outfit"
+                      ],
+                      "label-sm": [
+                              "Outfit"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+          .buzzer-shadow {
+              box-shadow: 0 20px 40px -10px rgba(56, 189, 248, 0.4);
+          }
+          .active-shadow {
+              box-shadow: 0 10px 15px -3px rgba(56, 189, 248, 0.2);
+          }
+          .timer-animation {
+              transition: width 0.1s linear;
+          }
+          .glass-overlay {
+              background: rgba(255, 255, 255, 0.7);
+              backdrop-filter: blur(12px);
+          }
+      </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="bg-surface/70 backdrop-blur-md dark:bg-surface-container-lowest/70 fixed top-0 w-full z-50 flat no shadows flex justify-between items-center w-full px-lg py-md max-w-[1200px] mx-auto">
+<div class="font-display-lg text-primary dark:text-primary-fixed-dim">
+            PartyHub
+        </div>
+<div class="hidden md:flex gap-md">
+<!-- Nav tabs from intent context, although this is a focused screen, keeping minimal nav if needed, but per rule: "Task-Focused: Any sub-page featuring a 'Close' or 'Back' action... suppress the navigation to prioritize the content canvas."
+            However, we have a top nav definition. Let's provide it but minimal. -->
+</div>
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-2xl hover:scale-105 transition-transform duration-200 cursor-pointer" data-icon="account_circle" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+<span class="material-symbols-outlined text-primary text-2xl hover:scale-105 transition-transform duration-200 cursor-pointer" data-icon="group" style="font-variation-settings: 'FILL' 1;">group</span>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 mt-24 mb-xl max-w-[1200px] mx-auto w-full px-margin-mobile md:px-lg grid grid-cols-1 md:grid-cols-12 gap-lg relative">
+<!-- Buzzer Area (Main focus) -->
+<section class="md:col-span-8 flex flex-col items-center justify-center min-h-[614px] bg-surface-container-lowest rounded-xl border border-surface-variant relative p-xl">
+<!-- Timer Bar -->
+<div class="w-full max-w-md mb-xl">
+<div class="flex justify-between items-end mb-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant">الوقت المتبقي</span>
+<span class="font-headline-md text-headline-md text-primary" id="timer-display">4.2ث</span>
+</div>
+<div class="h-3 bg-surface-container rounded-full overflow-hidden w-full relative">
+<div class="absolute right-0 top-0 h-full bg-secondary-container timer-animation w-[84%]" id="timer-bar"></div>
+</div>
+</div>
+<!-- Buzzer Button -->
+<button class="w-64 h-64 rounded-full bg-primary-container text-on-primary-container flex flex-col items-center justify-center buzzer-shadow hover:scale-105 transition-all duration-300 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-primary-fixed-dim">
+<span class="font-display-lg text-display-lg group-hover:animate-pulse">الـ Buzz مفتوح!</span>
+<span class="font-headline-md text-headline-md mt-sm opacity-90">اضغط الآن!</span>
+</button>
+<!-- Decorative floating chips -->
+<div class="absolute top-md left-md bg-tertiary-container/30 text-on-tertiary-container px-sm py-xs rounded-full font-label-sm text-label-sm flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm" data-icon="auto_awesome">auto_awesome</span>
+                سؤال 4/10
+            </div>
+<div class="absolute bottom-md right-md bg-secondary-container/30 text-on-secondary-container px-sm py-xs rounded-full font-label-sm text-label-sm flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm" data-icon="category">category</span>
+                تاريخ عربي
+            </div>
+</section>
+<!-- Leaderboard Sidebar -->
+<aside class="md:col-span-4 flex flex-col gap-md">
+<div class="bg-surface-container-lowest rounded-xl border border-surface-variant p-md flex flex-col gap-sm h-full">
+<h2 class="font-headline-md text-headline-md text-primary mb-sm border-b border-surface-variant pb-sm">أعلى اللاعبين</h2>
+<!-- Player 1 -->
+<div class="flex items-center gap-sm p-sm rounded-lg glass-overlay active-shadow border border-primary/20 relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A minimalist vector illustration avatar of a cheerful young woman with short dark hair, wearing a bright blue jacket against a soft white background, modern soft flat design style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB18lZsTliWviee4zMh2dH9kZFGg5xgFeLpKW0jAIwKV0AJTfEPa0Agw7bnTfronhjjmkzmVxUlI4xq4U_NLOu4YJfCZwFagAlSP5QAYPxHhbiUYM7BE8xSUHHTsgUw2k7N5FnXqI0n65ncz0InsS11U_R22wVU6W48Qr01X9xrWAQBYnv0YvJAaWdklHR542hN9jyBfS4gRk_XQhyaU7hiLYK3kIxsQtO9QPYnD6DpYnBXQXC6wZu4"/>
+</div>
+<div class="flex-1 flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface">أحمد ع.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant text-[12px]">المركز الأول</span>
+</div>
+<div class="font-headline-md text-headline-md text-primary">1250</div>
+</div>
+<!-- Player 2 -->
+<div class="flex items-center gap-sm p-sm rounded-lg hover:bg-surface-container-low transition-colors border border-transparent">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A minimalist vector illustration avatar of a smiling young man with a slight beard, wearing a green hoodie against a soft white background, modern soft flat design style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2lEZicQlbLDckOIY9SUb2XXhTpIEgZLSf1xl3QityiG5-m36qjp8nCTc_1RrCjBg7KsORLc9oQrLmAwnsxEhVeRzkaC49uDKv2CyZ0p9Pnpej74ozjPP1mlFjyPW2iD2Y6sL7FiThe2pW2hufMhhUz8FusOj22OYP8mogCnpDG3KM2B5our93VLxL3ItcmF1wv-nIvqsEwXRmKw-5cofOVNmcUmayqqzFw0WE4wFENju3fPqnCIwP"/>
+</div>
+<div class="flex-1 flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface">سارة م.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant text-[12px]">المركز الثاني</span>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant font-semibold">980</div>
+</div>
+<!-- Player 3 -->
+<div class="flex items-center gap-sm p-sm rounded-lg hover:bg-surface-container-low transition-colors border border-transparent">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A minimalist vector illustration avatar of a person with stylish glasses and curly hair, wearing a white shirt against a soft pinkish background, modern soft flat design style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCII6KqR1y7Ydf6fUExrvBk8KLSmPymU9aDoAwWlq-TS6ZIEBhctdU6Xi0gKNK2bToCRFV9skRAFHbC7oDRkD4-GmvigoAzJ8HuGKICld_1-VTFOgtjrluTwxWyZdTtcHSBL5ac6LFep-bINfiE3QTXqgryL3Ph1d15CuQOJ3gkk0UtcDpleNt6SUjDZQgMeCApaJwWyheqfhJWXXqSOZMUbCmGc8ruB9BZKQdQGeSDgdXt3B3AgDtR"/>
+</div>
+<div class="flex-1 flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface">عمر ف.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant text-[12px]">المركز الثالث</span>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant font-semibold">820</div>
+</div>
+<div class="mt-auto pt-md flex justify-center border-t border-surface-variant">
+<button class="text-primary font-label-sm text-label-sm hover:underline flex items-center gap-xs">
+                        عرض الترتيب الكامل
+                        <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</aside>
+</main>
+<!-- Footer -->
+<footer class="bg-transparent flex justify-center items-center gap-md w-full py-md">
+<span class="font-label-sm text-label-sm text-outline">© 2024 PartyHub Trivia • Made with joy</span>
+<div class="flex gap-sm">
+<a class="font-label-sm text-label-sm text-outline hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">About</a>
+<a class="font-label-sm text-label-sm text-outline hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Rules</a>
+<a class="font-label-sm text-label-sm text-outline hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Support</a>
+</div>
+</footer>
+<script>
+        // Simple timer animation script
+        document.addEventListener("DOMContentLoaded", () => {
+            const timerBar = document.getElementById('timer-bar');
+            const timerDisplay = document.getElementById('timer-display');
+            let timeLeft = 4.2;
+            const totalTime = 5.0;
+
+            const interval = setInterval(() => {
+                timeLeft -= 0.1;
+                if (timeLeft <= 0) {
+                    timeLeft = 0;
+                    clearInterval(interval);
+                    timerBar.style.width = '0%';
+                    timerDisplay.textContent = '0.0ث';
+                    // Change color to error when done or low
+                } else {
+                    const percentage = (timeLeft / totalTime) * 100;
+                    timerBar.style.width = percentage + '%';
+                    timerDisplay.textContent = timeLeft.toFixed(1) + 'ث';
+                    
+                    if (timeLeft < 1.5) {
+                        timerBar.classList.remove('bg-secondary-container');
+                        timerBar.classList.add('bg-error-container');
+                        timerDisplay.classList.remove('text-primary');
+                        timerDisplay.classList.add('text-error');
+                    }
+                }
+            }, 100);
+        });
+    </script>
+</body></html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PartyHub - Player Buzzer</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed-dim": "#4de082",
+                      "surface-variant": "#dee3e8",
+                      "error-container": "#ffdad6",
+                      "surface": "#f5faff",
+                      "on-tertiary-fixed-variant": "#85145a",
+                      "primary-fixed": "#c4e7ff",
+                      "on-surface-variant": "#3e484f",
+                      "on-tertiary-container": "#811057",
+                      "outline": "#6e7980",
+                      "on-error": "#ffffff",
+                      "on-primary-container": "#004965",
+                      "surface-container": "#eaeef3",
+                      "primary-fixed-dim": "#7bd0ff",
+                      "on-secondary-fixed-variant": "#005227",
+                      "on-secondary-container": "#007439",
+                      "on-background": "#171c20",
+                      "on-error-container": "#93000a",
+                      "background": "#f5faff",
+                      "on-secondary-fixed": "#00210c",
+                      "surface-container-high": "#e4e9ee",
+                      "primary-container": "#38bdf8",
+                      "on-primary": "#ffffff",
+                      "on-tertiary-fixed": "#3d0026",
+                      "tertiary": "#a43073",
+                      "on-primary-fixed": "#001e2c",
+                      "primary": "#00668a",
+                      "inverse-on-surface": "#edf1f6",
+                      "inverse-primary": "#7bd0ff",
+                      "surface-tint": "#00668a",
+                      "on-surface": "#171c20",
+                      "on-primary-fixed-variant": "#004c69",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-fixed-dim": "#ffafd3",
+                      "surface-dim": "#d6dbdf",
+                      "secondary-container": "#6dfe9c",
+                      "on-secondary": "#ffffff",
+                      "secondary": "#006d36",
+                      "secondary-fixed": "#6dfe9c",
+                      "surface-bright": "#f5faff",
+                      "surface-container-low": "#eff4f9",
+                      "error": "#ba1a1a",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-container": "#ff8cc5",
+                      "inverse-surface": "#2c3135",
+                      "tertiary-fixed": "#ffd8e7",
+                      "surface-container-highest": "#dee3e8",
+                      "outline-variant": "#bdc8d1"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "md": "24px",
+                      "sm": "12px",
+                      "xs": "4px",
+                      "xl": "64px",
+                      "gutter": "20px",
+                      "lg": "40px",
+                      "margin-desktop": "auto",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Outfit"
+                      ],
+                      "display-lg": [
+                              "Outfit"
+                      ],
+                      "display-lg-mobile": [
+                              "Outfit"
+                      ],
+                      "label-sm": [
+                              "Outfit"
+                      ],
+                      "body-lg": [
+                              "Outfit"
+                      ],
+                      "headline-md": [
+                              "Outfit"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        /* Shared CSS Logic */
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        body {
+            background-color: #F8FAFC;
+        }
+
+        /* Buzzer Animation */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 20px rgba(56, 189, 248, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+        }
+
+        .buzzer-active {
+            animation: pulse-ring 2s infinite;
+        }
+        
+        .progress-bar-fill {
+            transition: width 1s linear;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-md text-on-surface h-screen flex flex-col md:hidden">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-margin-mobile h-16 w-full z-50 fixed top-0 bg-surface/70 backdrop-blur-xl transition-all duration-300 ease-in-out">
+<div class="flex items-center gap-sm">
+<img alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-primary-container object-cover" data-alt="A small, stylized avatar image of a smiling person with colorful hair, set against a soft pastel background, matching a lighthearted social trivia app aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-g6uJbP9lS85ShKLltooAKLgh5HsXt2vmyVBr3psrCoCDBhC-TTBEB_bI8o2fWSGKM4W_tUG8jbE6c3iNffY9Nmp0DxPzOZByGUkzshdN3qiCACgm14nuNfzJQpKqGkh1BOV3xm7ZT8Y5TKsswvUsxhpd7182DwXreF9V38qlN1GH3kNNHuB4HzaGzRXZNZdnPPtqJ0dHPwggyRaJ6qlpg5-OEN0PzQhy8dJ01p0HYO6qMZIMql6H"/>
+</div>
+<div class="font-display-lg-mobile text-display-lg-mobile text-primary tracking-tight">PartyHub</div>
+<div class="flex items-center">
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:scale-105 transition-transform text-on-surface-variant">
+<span class="material-symbols-outlined text-[24px]">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col mt-16 mb-[80px] px-margin-mobile overflow-y-auto pt-lg">
+<!-- Context Area -->
+<div class="text-center mb-xl">
+<h1 class="font-headline-md text-headline-md text-on-surface mb-sm">سؤال الحظ!</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">أسرع شخص يضغط يربح 50 نقطة</p>
+</div>
+<!-- Timer / Progress Bar -->
+<div class="w-full bg-surface-container-high rounded-full h-3 mb-xl overflow-hidden shadow-sm relative">
+<div class="progress-bar-fill bg-secondary-fixed h-3 rounded-full absolute right-0 top-0 w-full" id="countdown-bar" style="width: 100%;"></div>
+</div>
+<!-- The Buzzer -->
+<div class="flex-1 flex items-center justify-center">
+<button class="buzzer-active relative w-64 h-64 rounded-full bg-primary-container text-on-primary-container shadow-[0_10px_15px_-3px_rgba(56,189,248,0.2)] hover:scale-105 transition-transform flex flex-col items-center justify-center gap-md border-4 border-primary-fixed">
+<span class="material-symbols-outlined text-[64px] fill-icon text-on-primary-container">touch_app</span>
+<span class="font-headline-md text-headline-md font-bold text-center px-4">الـ Buzz مفتوح!<br/>اضغط الآن!</span>
+</button>
+</div>
+<!-- Mini Leaderboard -->
+<div class="mt-xl bg-surface-container-lowest rounded-DEFAULT border border-surface-variant p-md">
+<h2 class="font-label-sm text-label-sm text-on-surface-variant mb-sm text-center">أسرع اللاعبين</h2>
+<div class="flex justify-around items-center">
+<!-- Player 1 -->
+<div class="flex flex-col items-center gap-xs">
+<img class="w-8 h-8 rounded-full border border-surface-variant object-cover" data-alt="A tiny avatar icon showing a cute dog face with sunglasses, pastel background, light UI style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9i-Jm9HBCdNs6sdWZaQcG5gb1hy5WTqOxLgXvhe6irvi50ip7KLpT8j2m9-RdCJFB_cR69618s67Ssfvwuywj7aYmFXMQdu_mae0LB1DWXgJnjDEWL4nhfJeIUDePgqenycxqG5D502g-FvjGkvmIv-Vw86tKicL1khSpes2Qs4FXPUXROnkvWFxBXYDpxUuCedk8IbPmx5nbEHr8GtywneITuDhfjmLrKM5kvFxwYdEcRGW-fjZn"/>
+<span class="font-label-sm text-label-sm text-on-surface">أحمد</span>
+</div>
+<!-- Player 2 -->
+<div class="flex flex-col items-center gap-xs">
+<img class="w-8 h-8 rounded-full border border-surface-variant object-cover" data-alt="A tiny avatar icon showing a smiling cat, pastel background, light UI style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCB0pddi6imcs0XX-1RviTpGIXQv1AzgQU7rIfxwiL9jrqStJdYQ9ntYqK_A0pEdqVOgxrN3LpO5iPXIspn5ShmFZO-lnVZiAHjM7lP13238nBPbTCiVLDgcgf4PsMyOUghCBrcq4MrTaeDrR048D0vVL1ZyjCZoNsxdEorR3InO9-mVt-xWQN0gRYdJSpdAmYEoAqYnzYHZ3OxkvcjTZMYNrSB91bRhqeLAkyLyalw5IkwvL41KawP"/>
+<span class="font-label-sm text-label-sm text-on-surface">سارة</span>
+</div>
+<!-- Player 3 -->
+<div class="flex flex-col items-center gap-xs opacity-50">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center border border-dashed border-outline-variant">
+<span class="material-symbols-outlined text-[16px] text-outline">more_horiz</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">انتظار...</span>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 bg-surface/70 backdrop-blur-xl rounded-t-lg shadow-[0_-10px_15px_-3px_rgba(56,189,248,0.1)] transition-all duration-200">
+<!-- Play (Active) -->
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-5 py-1.5 shadow-[0_10px_15px_-3px_rgba(56,189,248,0.2)] scale-105 transition-all duration-200 gap-1">
+<span class="material-symbols-outlined fill-icon">videogame_asset</span>
+<span class="font-label-sm text-label-sm">Play</span>
+</button>
+<!-- Rankings -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1.5 hover:text-primary scale-105 transition-all duration-200 gap-1">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-label-sm text-label-sm">Rankings</span>
+</button>
+<!-- Settings -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1.5 hover:text-primary scale-105 transition-all duration-200 gap-1">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</button>
+</nav>
+<script>
+        // Simple countdown logic for the progress bar
+        document.addEventListener("DOMContentLoaded", () => {
+            const bar = document.getElementById('countdown-bar');
+            let timeLeft = 5000; // 5 seconds
+            const totalTime = 5000;
+            const updateInterval = 50; // update every 50ms
+
+            const timer = setInterval(() => {
+                timeLeft -= updateInterval;
+                const percentage = (timeLeft / totalTime) * 100;
+                bar.style.width = `${Math.max(0, percentage)}%`;
+
+                if (timeLeft <= 1000) {
+                     bar.classList.remove('bg-secondary-fixed');
+                     bar.classList.add('bg-error'); // Transition to alert color
+                }
+
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    // Handle time up logic here
+                }
+            }, updateInterval);
+        });
+    </script>
+</body></html>

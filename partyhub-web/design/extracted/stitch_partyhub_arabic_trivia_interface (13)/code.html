@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PartyHub - إنشاء غرفة</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#171c20",
+                        "on-surface-variant": "#3e484f",
+                        "secondary-fixed": "#6dfe9c",
+                        "surface-bright": "#f5faff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#005227",
+                        "primary-container": "#38bdf8",
+                        "on-primary-container": "#004965",
+                        "secondary-fixed-dim": "#4de082",
+                        "on-tertiary-fixed-variant": "#85145a",
+                        "outline-variant": "#bdc8d1",
+                        "surface-container-low": "#eff4f9",
+                        "surface-container": "#eaeef3",
+                        "primary-fixed-dim": "#7bd0ff",
+                        "primary-fixed": "#c4e7ff",
+                        "surface-container-high": "#e4e9ee",
+                        "outline": "#6e7980",
+                        "on-primary": "#ffffff",
+                        "surface": "#f5faff",
+                        "on-tertiary": "#ffffff",
+                        "background": "#f5faff",
+                        "inverse-surface": "#2c3135",
+                        "surface-tint": "#00668a",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#ff8cc5",
+                        "on-tertiary-fixed": "#3d0026",
+                        "on-error": "#ffffff",
+                        "on-surface": "#171c20",
+                        "on-primary-fixed-variant": "#004c69",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#811057",
+                        "tertiary-fixed": "#ffd8e7",
+                        "secondary": "#006d36",
+                        "primary": "#00668a",
+                        "surface-dim": "#d6dbdf",
+                        "on-secondary-container": "#007439",
+                        "surface-variant": "#dee3e8",
+                        "tertiary-fixed-dim": "#ffafd3",
+                        "on-primary-fixed": "#001e2c",
+                        "inverse-primary": "#7bd0ff",
+                        "secondary-container": "#6dfe9c",
+                        "surface-container-highest": "#dee3e8",
+                        "on-secondary-fixed": "#00210c",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#edf1f6",
+                        "tertiary": "#a43073"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "auto",
+                        "xl": "64px",
+                        "gutter": "20px",
+                        "base": "8px",
+                        "lg": "40px",
+                        "sm": "12px",
+                        "margin-mobile": "16px",
+                        "xs": "4px",
+                        "md": "24px",
+                        "safe": "env(safe-area-inset-bottom)"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Outfit"],
+                        "label-sm": ["Outfit"],
+                        "display-lg": ["Outfit"],
+                        "body-md": ["Outfit"],
+                        "display-lg-mobile": ["Outfit"],
+                        "body-lg": ["Outfit"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-sm": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #f5faff;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(200, 100%, 95%, 1) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(280, 100%, 98%, 1) 0px, transparent 50%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #38bdf8;
+            cursor: pointer;
+            margin-top: -8px;
+            box-shadow: 0 4px 6px -1px rgba(56, 189, 248, 0.3);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: #c4e7ff;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="text-on-background font-body-md pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 backdrop-blur-md bg-surface/70 dark:bg-surface-dim/70 shadow-sm border-b border-outline-variant/30 flex flex-row-reverse justify-between items-center px-margin-mobile h-16">
+<button aria-label="Menu" class="text-primary dark:text-primary-fixed-dim hover:opacity-80 transition-opacity active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-2xl" data-icon="menu">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md-mobile text-primary dark:text-primary-fixed-dim tracking-tight font-bold">PartyHub</h1>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-variant flex-shrink-0 cursor-pointer shadow-sm">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A small circular avatar placeholder image showing a playful, minimalist illustration of a stylized character face in soft sky blue and white tones. The character has an approachable, friendly expression, designed to fit a lighthearted social app interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDV2bwD2sKUwAqaV-nZuP_Ng5I4HU8HoRxr0lyzfu6cWroxjNQGwgjz82EZDOCI7gcfsJ_JUdE1j7rpO0LNrAPOmyk2woR068fQhB1qlCZ3gwL8N6EUvye3JUspgQvWqg6o9wHA36F4F8qrSsYL9rZ7iOWPfko7akmZYsJtIWKzHylQxi5fBmahXEl981w43PnK2lP4lszaVg0cWG0rz3ci2_d14QAM9wRwENRUagXxRmw6Mo_F7bjQ"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 px-margin-mobile flex flex-col gap-md max-w-[600px] mx-auto">
+<div class="text-center mb-sm">
+<h2 class="font-display-lg-mobile text-display-lg-mobile text-primary mb-xs">إنشاء غرفة</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">جهز المسرح للمرح القادم!</p>
+</div>
+<!-- Form Container -->
+<form class="glass-card rounded-xl p-md shadow-sm flex flex-col gap-md relative overflow-hidden">
+<!-- Decorative blur blob -->
+<div class="absolute -top-10 -right-10 w-32 h-32 bg-primary-fixed rounded-full mix-blend-multiply filter blur-2xl opacity-50 pointer-events-none"></div>
+<!-- Room Name -->
+<div class="flex flex-col gap-xs z-10">
+<label class="font-label-sm text-label-sm text-primary" for="room_name">اسم الغرفة</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline" data-icon="edit">edit</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg py-3 pr-12 pl-4 font-body-lg text-body-lg text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-colors outline-none shadow-sm placeholder:text-outline-variant" id="room_name" placeholder="مثال: تحدي ليلة الجمعة" type="text"/>
+</div>
+</div>
+<!-- Category Picker -->
+<div class="flex flex-col gap-xs z-10">
+<label class="font-label-sm text-label-sm text-primary">التصنيف</label>
+<div class="grid grid-cols-2 gap-sm">
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only" name="category" type="radio" value="general"/>
+<div class="p-3 border border-outline-variant rounded-lg flex items-center justify-center gap-2 bg-surface-container-lowest peer-checked:border-primary peer-checked:bg-primary-container/20 peer-checked:text-primary transition-all shadow-sm">
+<span class="material-symbols-outlined" data-icon="public">public</span>
+<span class="font-body-md text-body-md">معلومات عامة</span>
+</div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="category" type="radio" value="music"/>
+<div class="p-3 border border-outline-variant rounded-lg flex items-center justify-center gap-2 bg-surface-container-lowest peer-checked:border-primary peer-checked:bg-primary-container/20 peer-checked:text-primary transition-all shadow-sm">
+<span class="material-symbols-outlined" data-icon="music_note">music_note</span>
+<span class="font-body-md text-body-md">موسيقى</span>
+</div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="category" type="radio" value="movies"/>
+<div class="p-3 border border-outline-variant rounded-lg flex items-center justify-center gap-2 bg-surface-container-lowest peer-checked:border-primary peer-checked:bg-primary-container/20 peer-checked:text-primary transition-all shadow-sm">
+<span class="material-symbols-outlined" data-icon="movie">movie</span>
+<span class="font-body-md text-body-md">أفلام</span>
+</div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="category" type="radio" value="sports"/>
+<div class="p-3 border border-outline-variant rounded-lg flex items-center justify-center gap-2 bg-surface-container-lowest peer-checked:border-primary peer-checked:bg-primary-container/20 peer-checked:text-primary transition-all shadow-sm">
+<span class="material-symbols-outlined" data-icon="sports_soccer">sports_soccer</span>
+<span class="font-body-md text-body-md">رياضة</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Max Players Slider -->
+<div class="flex flex-col gap-sm z-10 mt-sm">
+<div class="flex justify-between items-center">
+<label class="font-label-sm text-label-sm text-primary" for="max_players">الحد الأقصى للاعبين</label>
+<span class="font-headline-md text-headline-md text-primary bg-primary-fixed px-3 py-1 rounded-full shadow-sm" id="player_count_display">4</span>
+</div>
+<input class="w-full h-2 rounded-lg appearance-none cursor-pointer" id="max_players" max="10" min="2" type="range" value="4"/>
+<div class="flex justify-between text-xs text-on-surface-variant px-1">
+<span>2</span>
+<span>10</span>
+</div>
+</div>
+<!-- Win Condition -->
+<div class="flex flex-col gap-xs z-10 mt-sm">
+<label class="font-label-sm text-label-sm text-primary">شرط الفوز</label>
+<div class="flex flex-col gap-2 bg-surface-container-lowest rounded-lg border border-outline-variant p-2 shadow-sm">
+<label class="flex items-center gap-3 p-2 cursor-pointer hover:bg-surface-container-low rounded-lg transition-colors">
+<input checked="" class="text-primary focus:ring-primary h-5 w-5 border-outline-variant" name="win_condition" type="radio" value="score"/>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface">الوصول لـ 500 نقطة</span>
+<span class="text-sm text-on-surface-variant">أول من يصل للهدف يفوز</span>
+</div>
+</label>
+<hr class="border-outline-variant/30"/>
+<label class="flex items-center gap-3 p-2 cursor-pointer hover:bg-surface-container-low rounded-lg transition-colors">
+<input class="text-primary focus:ring-primary h-5 w-5 border-outline-variant" name="win_condition" type="radio" value="time"/>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface">أعلى نقاط بعد 10 جولات</span>
+<span class="text-sm text-on-surface-variant">الأكثر نقاطاً في النهاية يفوز</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Primary Action -->
+<button class="mt-md w-full bg-primary-container text-on-primary-container font-headline-md text-headline-md-mobile py-4 rounded-xl shadow-[0_10px_15px_-3px_rgba(56,189,248,0.2)] hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 z-10" type="button">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+<span>إنشاء الغرفة وبدء اللعب</span>
+</button>
+</form>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 rounded-t-lg backdrop-blur-xl bg-surface/80 dark:bg-surface-container-highest/80 shadow-[0_-4px_12px_rgba(56,189,248,0.1)] flex flex-row-reverse justify-around items-center px-2 py-3 pb-safe border-t-0 bg-surface-container-low/50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 active:scale-110 transition-transform duration-200 p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">الرئيسية</span>
+</a>
+<!-- Active Tab: Rooms -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1.5 active:scale-110 transition-transform duration-200 shadow-sm" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="groups">groups</span>
+<span class="font-label-sm text-label-sm">الغرف</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 active:scale-110 transition-transform duration-200 p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="emoji_events">emoji_events</span>
+<span class="font-label-sm text-label-sm">الإنجازات</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 active:scale-110 transition-transform duration-200 p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="settings">settings</span>
+<span class="font-label-sm text-label-sm">الإعدادات</span>
+</a>
+</nav>
+<script>
+        // Update slider value display
+        const slider = document.getElementById('max_players');
+        const display = document.getElementById('player_count_display');
+        
+        slider.addEventListener('input', function() {
+            display.textContent = this.value;
+            // Add a little pop animation
+            display.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                display.style.transform = 'scale(1)';
+            }, 150);
+        });
+    </script>
+</body></html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html class="light" dir="ltr" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Victory Podium - PartyHub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed-dim": "#4de082",
+                      "surface-variant": "#dee3e8",
+                      "error-container": "#ffdad6",
+                      "surface": "#f5faff",
+                      "on-tertiary-fixed-variant": "#85145a",
+                      "primary-fixed": "#c4e7ff",
+                      "on-surface-variant": "#3e484f",
+                      "on-tertiary-container": "#811057",
+                      "outline": "#6e7980",
+                      "on-error": "#ffffff",
+                      "on-primary-container": "#004965",
+                      "surface-container": "#eaeef3",
+                      "primary-fixed-dim": "#7bd0ff",
+                      "on-secondary-fixed-variant": "#005227",
+                      "on-secondary-container": "#007439",
+                      "on-background": "#171c20",
+                      "on-error-container": "#93000a",
+                      "background": "#f5faff",
+                      "on-secondary-fixed": "#00210c",
+                      "surface-container-high": "#e4e9ee",
+                      "primary-container": "#38bdf8",
+                      "on-primary": "#ffffff",
+                      "on-tertiary-fixed": "#3d0026",
+                      "tertiary": "#a43073",
+                      "on-primary-fixed": "#001e2c",
+                      "primary": "#00668a",
+                      "inverse-on-surface": "#edf1f6",
+                      "inverse-primary": "#7bd0ff",
+                      "surface-tint": "#00668a",
+                      "on-surface": "#171c20",
+                      "on-primary-fixed-variant": "#004c69",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-fixed-dim": "#ffafd3",
+                      "surface-dim": "#d6dbdf",
+                      "secondary-container": "#6dfe9c",
+                      "on-secondary": "#ffffff",
+                      "secondary": "#006d36",
+                      "secondary-fixed": "#6dfe9c",
+                      "surface-bright": "#f5faff",
+                      "surface-container-low": "#eff4f9",
+                      "error": "#ba1a1a",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-container": "#ff8cc5",
+                      "inverse-surface": "#2c3135",
+                      "tertiary-fixed": "#ffd8e7",
+                      "surface-container-highest": "#dee3e8",
+                      "outline-variant": "#bdc8d1"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "md": "24px",
+                      "sm": "12px",
+                      "xs": "4px",
+                      "xl": "64px",
+                      "gutter": "20px",
+                      "lg": "40px",
+                      "margin-desktop": "auto",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Outfit"
+                      ],
+                      "display-lg": [
+                              "Outfit"
+                      ],
+                      "display-lg-mobile": [
+                              "Outfit"
+                      ],
+                      "label-sm": [
+                              "Outfit"
+                      ],
+                      "body-lg": [
+                              "Outfit"
+                      ],
+                      "headline-md": [
+                              "Outfit"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #38bdf8;
+            opacity: 0;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md h-screen w-full overflow-hidden flex flex-col relative">
+<!-- Confetti Container -->
+<div class="absolute inset-0 pointer-events-none z-0 overflow-hidden" id="confetti-container"></div>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col items-center justify-start pt-xl px-margin-mobile relative z-10 w-full max-w-[480px] mx-auto pb-[100px] overflow-y-auto">
+<!-- Header -->
+<div class="text-center mb-xl w-full">
+<h1 class="font-display-lg-mobile text-display-lg-mobile text-primary tracking-tight mb-sm">Victory!</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Trivia Master Challenge</p>
+</div>
+<!-- 3-Tier Podium -->
+<div class="flex items-end justify-center w-full max-w-[340px] h-[280px] mb-xl relative rtl:flex-row-reverse">
+<!-- 2nd Place -->
+<div class="flex flex-col items-center w-1/3 z-20 transform translate-y-4">
+<div class="relative mb-sm">
+<img class="w-16 h-16 rounded-full border-4 border-surface-container-highest object-cover shadow-[0_10px_15px_-3px_rgba(56,189,248,0.1)]" data-alt="A stylized, lighthearted 3D avatar of a smiling character with blue hair, rendered in a bright, modern, and optimistic visual style with soft lighting against a plain light background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwpqJEJKR6idVabZkLQ9qESUimBRRaEa3cwzYS8sz2r81KgecW0I49iM2PX03LIU6yUSO7A5aQa4M4AMaYhvIANSbhQtV0Cyl_gowXoF4bMU6ze8eK88EG6g0o_vNAtrWy4bS_j3cyv1XTbezEWYlAVJmI0DMTnWN5DwCt3zSjn3_dxAJhMk0z7uvfPM2iEpi0coR7qVHlryMXi6h6lzyYy5PpcElqBVvjdzSmQ35WN0I7d8HF4nV1"/>
+<div class="absolute -bottom-2 -right-2 bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm w-6 h-6 rounded-full flex items-center justify-center shadow-sm">2</div>
+</div>
+<div class="bg-surface-container-high rounded-t-lg w-full h-[100px] flex flex-col items-center justify-start pt-sm relative overflow-hidden backdrop-blur-xl border border-surface-container">
+<div class="absolute inset-0 bg-white/40"></div>
+<span class="font-label-sm text-label-sm text-on-surface relative z-10 truncate w-full px-2 text-center">Alex</span>
+<span class="font-body-md text-body-md text-primary relative z-10">4,200</span>
+</div>
+</div>
+<!-- 1st Place (Center) -->
+<div class="flex flex-col items-center w-1/3 z-30">
+<div class="relative mb-sm">
+<img class="w-20 h-20 rounded-full border-4 border-primary-container object-cover shadow-[0_10px_15px_-3px_rgba(56,189,248,0.3)]" data-alt="A stylized, lighthearted 3D avatar of a very happy character wearing a golden crown, rendered in a bright, modern, and optimistic visual style with soft glowing lighting against a plain light background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdw48Lm6BFoBJEXN_Y-lLUraXMwDf_mA7l8Fdl8dIC7QipIYoDFCbFrM-WNRfH2_e8eHKPGA6awTQs_M7GDyUDjUbFTvVVKm4_KiDibt7Cy0WNF635_JxHIh0YI09n1-Lc4m3d_ru9JXaKUPrbD_ikcgfIm8L0bbw6q_Oc4NwaUHl3t3APJJG33JNsWe6J2nN_gprrUwclyRnGQQ-4-U_loNTgh7b9EcTFQJUFmrEp5xmtj7HvjbeC"/>
+<div class="absolute -bottom-2 -right-2 bg-primary-container text-on-primary-container font-label-sm text-label-sm w-8 h-8 rounded-full flex items-center justify-center shadow-md">1</div>
+<!-- Crown Icon -->
+<span class="material-symbols-outlined absolute -top-4 left-1/2 transform -translate-x-1/2 text-primary-container text-3xl" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+</div>
+<div class="bg-primary-container rounded-t-lg w-full h-[140px] flex flex-col items-center justify-start pt-sm relative overflow-hidden shadow-[0_-10px_15px_-3px_rgba(56,189,248,0.2)] border border-primary-fixed-dim">
+<div class="absolute inset-0 bg-white/20"></div>
+<span class="font-headline-md text-headline-md text-on-primary-container relative z-10 truncate w-full px-2 text-center mt-sm">Sam</span>
+<span class="font-body-lg text-body-lg font-bold text-on-primary-container relative z-10">5,850</span>
+</div>
+</div>
+<!-- 3rd Place -->
+<div class="flex flex-col items-center w-1/3 z-10 transform translate-y-8">
+<div class="relative mb-sm">
+<img class="w-14 h-14 rounded-full border-4 border-surface-container-highest object-cover shadow-[0_10px_15px_-3px_rgba(56,189,248,0.1)]" data-alt="A stylized, lighthearted 3D avatar of a character with glasses, rendered in a bright, modern, and optimistic visual style with soft lighting against a plain light background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRHFUwBU2Qhfx-kZ0DL7zpx_tSC4zJsCJIaP1bvaTEtaBHC-IvtbFMDRG3jwMnyM2T2NZB_RG0Yhy3EahbaNpg2CG0-fIcBZHJKY2RXhtWHcBhqVaMVsGLBmqZaNliB0ffS2tceLICeMxppNfsuKq2quMfA__L8nvsxZmDxL20FrWQMsJRGwDXCcuzBMR3ynuXmbWAeUoQN_GA79nipWkWGCkMmgOIKKzrV5g_2D5EnKx4IGDUdQiy"/>
+<div class="absolute -bottom-2 -right-2 bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm w-6 h-6 rounded-full flex items-center justify-center shadow-sm">3</div>
+</div>
+<div class="bg-surface-container-high rounded-t-lg w-full h-[80px] flex flex-col items-center justify-start pt-sm relative overflow-hidden backdrop-blur-xl border border-surface-container">
+<div class="absolute inset-0 bg-white/40"></div>
+<span class="font-label-sm text-label-sm text-on-surface relative z-10 truncate w-full px-2 text-center">Jordan</span>
+<span class="font-body-md text-body-md text-primary relative z-10">3,900</span>
+</div>
+</div>
+</div>
+<!-- Match Statistics Card -->
+<div class="w-full bg-white rounded-lg p-md mb-xl shadow-sm border border-surface-variant/50 relative overflow-hidden">
+<div class="absolute inset-0 bg-white/70 backdrop-blur-xl z-0"></div>
+<div class="relative z-10">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-md text-center">Match Stats</h3>
+<div class="space-y-sm">
+<div class="flex justify-between items-center bg-surface-container-low p-sm rounded-lg">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">timer</span>
+<span class="font-body-md text-body-md text-on-surface">Duration</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">4m 32s</span>
+</div>
+<div class="flex justify-between items-center bg-surface-container-low p-sm rounded-lg">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Accuracy (Avg)</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">78%</span>
+</div>
+<div class="flex justify-between items-center bg-surface-container-low p-sm rounded-lg">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-tertiary-container" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<span class="font-body-md text-body-md text-on-surface">Longest Streak</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Sam (9)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Primary Action -->
+<button class="w-full bg-primary-container text-on-primary-container font-label-sm text-label-sm py-4 rounded-full shadow-[0_10px_15px_-3px_rgba(56,189,248,0.2)] hover:scale-105 transition-transform duration-300 flex items-center justify-center gap-sm mb-xl">
+<span class="material-symbols-outlined">home</span>
+            Return to Lobby
+        </button>
+</main>
+<!-- BottomNavBar (Transaction/Dead-end screen, so navigation is suppressed as per instructions, but adding a minimal visual anchor if needed. Actually, strict suppression rules apply: "Linear/Transactional... Success/Confirmation splash screens" -> Suppress Nav Shell) -->
+<!-- Navigation intentionally omitted per "Automatic Suppression" rule for linear/success screens -->
+<script>
+        // Simple Confetti Animation
+        function createConfetti() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#38bdf8', '#6dfe9c', '#ff8cc5', '#ffd8e7', '#c4e7ff'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti-piece');
+                
+                // Random properties
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Animation settings
+                const duration = Math.random() * 3 + 2; // 2-5s
+                const delay = Math.random() * 2;
+                
+                confetti.style.animation = `fall ${duration}s linear ${delay}s infinite`;
+                
+                // Shape variations
+                if (Math.random() > 0.5) {
+                    confetti.style.borderRadius = '50%';
+                }
+                
+                container.appendChild(confetti);
+            }
+        }
+
+        window.onload = createConfetti;
+    </script>
+</body></html>

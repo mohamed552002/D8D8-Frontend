@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PartyHub - Host Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed-dim": "#4de082",
+                      "surface-variant": "#dee3e8",
+                      "error-container": "#ffdad6",
+                      "surface": "#f5faff",
+                      "on-tertiary-fixed-variant": "#85145a",
+                      "primary-fixed": "#c4e7ff",
+                      "on-surface-variant": "#3e484f",
+                      "on-tertiary-container": "#811057",
+                      "outline": "#6e7980",
+                      "on-error": "#ffffff",
+                      "on-primary-container": "#004965",
+                      "surface-container": "#eaeef3",
+                      "primary-fixed-dim": "#7bd0ff",
+                      "on-secondary-fixed-variant": "#005227",
+                      "on-secondary-container": "#007439",
+                      "on-background": "#171c20",
+                      "on-error-container": "#93000a",
+                      "background": "#f5faff",
+                      "on-secondary-fixed": "#00210c",
+                      "surface-container-high": "#e4e9ee",
+                      "primary-container": "#38bdf8",
+                      "on-primary": "#ffffff",
+                      "on-tertiary-fixed": "#3d0026",
+                      "tertiary": "#a43073",
+                      "on-primary-fixed": "#001e2c",
+                      "primary": "#00668a",
+                      "inverse-on-surface": "#edf1f6",
+                      "inverse-primary": "#7bd0ff",
+                      "surface-tint": "#00668a",
+                      "on-surface": "#171c20",
+                      "on-primary-fixed-variant": "#004c69",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-fixed-dim": "#ffafd3",
+                      "surface-dim": "#d6dbdf",
+                      "secondary-container": "#6dfe9c",
+                      "on-secondary": "#ffffff",
+                      "secondary": "#006d36",
+                      "secondary-fixed": "#6dfe9c",
+                      "surface-bright": "#f5faff",
+                      "surface-container-low": "#eff4f9",
+                      "error": "#ba1a1a",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-container": "#ff8cc5",
+                      "inverse-surface": "#2c3135",
+                      "tertiary-fixed": "#ffd8e7",
+                      "surface-container-highest": "#dee3e8",
+                      "outline-variant": "#bdc8d1"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "md": "24px",
+                      "sm": "12px",
+                      "xs": "4px",
+                      "xl": "64px",
+                      "gutter": "20px",
+                      "lg": "40px",
+                      "margin-desktop": "auto",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Outfit"
+                      ],
+                      "display-lg": [
+                              "Outfit"
+                      ],
+                      "display-lg-mobile": [
+                              "Outfit"
+                      ],
+                      "label-sm": [
+                              "Outfit"
+                      ],
+                      "body-lg": [
+                              "Outfit"
+                      ],
+                      "headline-md": [
+                              "Outfit"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+        /* Soft Glassmorphism Effects */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md antialiased min-h-screen flex flex-col pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/70 backdrop-blur-xl transition-all duration-300 ease-in-out flex justify-between items-center px-margin-mobile h-16 w-full">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover border-2 border-surface-container-highest" data-alt="A small, stylized avatar image of a user with a lighthearted, friendly appearance, fitting a modern light-mode app design. The background is a soft sky blue." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1TVTM5_xfr1rRNX7xraMpL-6AGeKQWmEOGJiSnfKbL-ILQJLmDN5_fHaJvHJsIyNPpzhpeZaKEVZEOa3dYBENNKPBFjiF_l44wqJl0KkFCBhnsQEIaoCbYl1uExPGsTa0bftSIlYXQNZS_-d6l8-OnEfWY8lmiAguD_ELoptOC28tKFW54Bmd-ABslp1Xh4RfjX784RSla6SPuYlLLeBojw3fARf6Ahzf11KdJ8FGLKaOno6_D6sa"/>
+<h1 class="font-display-lg-mobile text-display-lg-mobile text-primary tracking-tight">PartyHub</h1>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:scale-105 transition-transform bg-surface-container-highest/50">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-24 px-margin-mobile flex flex-col gap-6">
+<!-- Question Card -->
+<section class="glass-card rounded-[2rem] p-6 shadow-sm flex flex-col gap-4 relative overflow-hidden border border-outline-variant/30">
+<!-- Decorative background element -->
+<div class="absolute -right-10 -top-10 w-32 h-32 bg-primary-container/20 rounded-full blur-2xl"></div>
+<div class="flex justify-between items-center relative z-10">
+<div class="bg-tertiary-container/30 text-on-tertiary-container px-3 py-1 rounded-full font-label-sm text-label-sm">
+                    الجولة ٣ - رياضة
+                </div>
+<div class="flex items-center gap-1 text-primary-fixed-dim">
+<span class="material-symbols-outlined text-[20px]">timer</span>
+<span class="font-headline-md text-headline-md">00:15</span>
+</div>
+</div>
+<h2 class="font-display-lg-mobile text-display-lg-mobile text-on-surface text-center mt-4 mb-2 relative z-10">
+                من هو الهداف التاريخي لكأس العالم؟
+            </h2>
+<div class="bg-surface-container/50 rounded-xl p-4 mt-2 border border-surface-container-highest text-center">
+<p class="font-body-lg text-body-lg text-on-surface-variant">الإجابة الصحيحة:</p>
+<p class="font-headline-md text-headline-md text-primary mt-1">ميروسلاف كلوزه (١٦ هدف)</p>
+</div>
+</section>
+<!-- Current Player Turn (The "Buzzer" Winner) -->
+<section class="bg-primary/5 rounded-[2rem] p-5 border border-primary/20 flex items-center gap-4">
+<div class="relative">
+<img class="w-14 h-14 rounded-full object-cover border-4 border-primary shadow-[0_0_15px_rgba(56,189,248,0.4)]" data-alt="A portrait photo of a young man smiling energetically, serving as a player avatar in a trivia game interface. Soft lighting, modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgTwCAvgoXyCMLxs1kbJ97yKGwx7fTqsu2tbEZ0BYe9Z8isZJMJvqNwOSi4N4qbq_skwilz-oAZfuUBztEWIe-LlcJtPYQnKi6wlQAuZYQOCfEG8q8hCMK0lZFOzlqHLgsyP50Dt5NX6fsN0XOYU_egwvQOyyYTCNBlTa8u4oa19sM4OUqulyrfcvabZYli9MyhLbvL1jW83Fqxe6Z4U05iXCg5ul15YvOgofiCMkdtkusEu3kkHA4"/>
+<div class="absolute -bottom-1 -right-1 bg-secondary rounded-full w-5 h-5 flex items-center justify-center border-2 border-surface">
+<span class="material-symbols-outlined text-white text-[12px]">mic</span>
+</div>
+</div>
+<div class="flex-grow">
+<p class="font-label-sm text-label-sm text-on-surface-variant">يجيب الآن</p>
+<h3 class="font-headline-md text-headline-md text-on-surface">أحمد السعيد</h3>
+</div>
+</section>
+<!-- Judgment Buttons -->
+<section class="grid grid-cols-2 gap-4">
+<button class="bg-secondary-container hover:bg-secondary-fixed text-on-secondary-container rounded-xl py-4 flex flex-col items-center justify-center gap-2 transition-all duration-200 hover:scale-[1.02] active:scale-95 shadow-sm border border-secondary/10">
+<span class="material-symbols-outlined text-[32px]">check_circle</span>
+<span class="font-headline-md text-headline-md">صح +١</span>
+</button>
+<button class="bg-error-container hover:bg-error/20 text-on-error-container rounded-xl py-4 flex flex-col items-center justify-center gap-2 transition-all duration-200 hover:scale-[1.02] active:scale-95 shadow-sm border border-error/10">
+<span class="material-symbols-outlined text-[32px]">cancel</span>
+<span class="font-headline-md text-headline-md">خطأ -١</span>
+</button>
+<button class="col-span-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface rounded-xl py-4 flex items-center justify-center gap-2 transition-all duration-200 active:scale-95 border border-outline-variant/30">
+<span class="material-symbols-outlined">replay</span>
+<span class="font-headline-md text-headline-md">إعادة Buzz</span>
+</button>
+</section>
+<!-- Player Status Grid -->
+<section class="mt-4">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">ترتيب اللاعبين</h3>
+<div class="flex flex-col gap-3">
+<!-- Player 1 -->
+<div class="flex items-center gap-3 p-3 bg-surface-container-lowest rounded-xl border border-surface-container-highest shadow-sm">
+<div class="font-headline-md text-headline-md text-primary w-6 text-center">١</div>
+<img class="w-10 h-10 rounded-full object-cover" data-alt="A portrait photo of a young man smiling energetically, serving as a player avatar in a trivia game interface. Soft lighting, modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBc6jdpOE6TgpZq2aW0iWFLYAOjUdTiB7MhSXYC6fyTpjww5iFVCC49OlB1wpQmjUQuFN_k-jN6kV2qrR3hpYw5iHzbz_bqS0bCRpSfC9od79-7v9rVLmn8GeIrVX1LUGfPS81oBrPXPtJN1vn39MjpmFPZk_V1EPFxO-H0HvMdTwwQw_StAvRVtW8sSKbAqhQw8OCYHiLlSeh3LeJXvNwkbc9cba6E_autX980PDVcaXM6a5GE3ues"/>
+<div class="flex-grow">
+<p class="font-body-md text-body-md font-semibold text-on-surface">أحمد السعيد</p>
+</div>
+<div class="bg-primary-container/20 text-primary-fixed-dim px-3 py-1 rounded-full font-label-sm text-label-sm font-bold">
+                        ٥ نقاط
+                    </div>
+</div>
+<!-- Player 2 -->
+<div class="flex items-center gap-3 p-3 bg-surface-container-lowest rounded-xl border border-surface-container-highest shadow-sm opacity-80">
+<div class="font-headline-md text-headline-md text-on-surface-variant w-6 text-center">٢</div>
+<img class="w-10 h-10 rounded-full object-cover grayscale-[20%]" data-alt="A portrait photo of a young woman with a casual style, serving as a player avatar in a lighthearted trivia game. Bright, inviting lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjMpJlgJC_TfI9J5QpLG84B5BLt3C39SqlVYkpHAPKqgSYGZKk2j830bwdywz0qAdhahAxlGh9j_v9GXQdaDIYUu2GLpwAFhxgP5gs8LmxZxi8Uk9hAJcDiVkLXgPCoNMefU7rjwx9nXU_-Pn3G_yGrlCzSLbqhZHaAkQreJXrpgzDTbjLiP8v4aihCEVh0DUu-G1_I4islbx_z-w6a_z1_YHf7rez03HJ0Jj0EpMIYSD8A5MISIfn"/>
+<div class="flex-grow">
+<p class="font-body-md text-body-md text-on-surface-variant">سارة محمد</p>
+</div>
+<div class="bg-surface-container text-on-surface-variant px-3 py-1 rounded-full font-label-sm text-label-sm font-bold">
+                        ٣ نقاط
+                    </div>
+</div>
+<!-- Player 3 -->
+<div class="flex items-center gap-3 p-3 bg-surface-container-lowest rounded-xl border border-surface-container-highest shadow-sm opacity-80">
+<div class="font-headline-md text-headline-md text-on-surface-variant w-6 text-center">٣</div>
+<img class="w-10 h-10 rounded-full object-cover grayscale-[20%]" data-alt="A portrait photo of a man with glasses looking thoughtful, used as a player avatar for a mobile trivia app. Modern, clean aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBY1d9HPOqqtMOJlL6GOIq5ZIyXbxfSnW8nXk4IM87pRVIvWYhN0m-ev0KLh3WUQT9UHkWurGVMnGWmNZ5lxJaFyKfZ23tmGSzE0FYn1mNCf82oySdIGAMHbrBaS87V6MjqPaFFVJnO4L26kdqSS-OYmc8Zczv6FEu3Ql-oDa6wEohmhLLktaB-j08ApBHo2f4lfkSYUgEHsKoUbvL4dH2yWYD1d_VXbrKqaaNvVYulTqrjBjL_z63C"/>
+<div class="flex-grow">
+<p class="font-body-md text-body-md text-on-surface-variant">خالد عبدالله</p>
+</div>
+<div class="bg-surface-container text-on-surface-variant px-3 py-1 rounded-full font-label-sm text-label-sm font-bold">
+                        ٢ نقطة
+                    </div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 bg-surface/70 backdrop-blur-xl shadow-[0_-10px_15px_-3px_rgba(56,189,248,0.1)] rounded-t-lg">
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-5 py-1.5 shadow-[0_10px_15px_-3px_rgba(56,189,248,0.2)] scale-105 transition-all duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">videogame_asset</span>
+<span class="font-label-sm text-label-sm mt-1">Play</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1.5 hover:text-primary transition-all duration-200">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-label-sm text-label-sm mt-1">Rankings</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1.5 hover:text-primary transition-all duration-200">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-sm text-label-sm mt-1">Settings</span>
+</button>
+</nav>
+</body></html>

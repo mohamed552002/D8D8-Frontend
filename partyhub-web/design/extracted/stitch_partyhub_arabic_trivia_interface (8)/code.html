@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PartyHub - إنشاء غرفة</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#171c20",
+                    "on-surface-variant": "#3e484f",
+                    "secondary-fixed": "#6dfe9c",
+                    "surface-bright": "#f5faff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-fixed-variant": "#005227",
+                    "primary-container": "#38bdf8",
+                    "on-primary-container": "#004965",
+                    "secondary-fixed-dim": "#4de082",
+                    "on-tertiary-fixed-variant": "#85145a",
+                    "outline-variant": "#bdc8d1",
+                    "surface-container-low": "#eff4f9",
+                    "surface-container": "#eaeef3",
+                    "primary-fixed-dim": "#7bd0ff",
+                    "primary-fixed": "#c4e7ff",
+                    "surface-container-high": "#e4e9ee",
+                    "outline": "#6e7980",
+                    "on-primary": "#ffffff",
+                    "surface": "#f5faff",
+                    "on-tertiary": "#ffffff",
+                    "background": "#f5faff",
+                    "inverse-surface": "#2c3135",
+                    "surface-tint": "#00668a",
+                    "error-container": "#ffdad6",
+                    "tertiary-container": "#ff8cc5",
+                    "on-tertiary-fixed": "#3d0026",
+                    "on-error": "#ffffff",
+                    "on-surface": "#171c20",
+                    "on-primary-fixed-variant": "#004c69",
+                    "error": "#ba1a1a",
+                    "on-tertiary-container": "#811057",
+                    "tertiary-fixed": "#ffd8e7",
+                    "secondary": "#006d36",
+                    "primary": "#00668a",
+                    "surface-dim": "#d6dbdf",
+                    "on-secondary-container": "#007439",
+                    "surface-variant": "#dee3e8",
+                    "tertiary-fixed-dim": "#ffafd3",
+                    "on-primary-fixed": "#001e2c",
+                    "inverse-primary": "#7bd0ff",
+                    "secondary-container": "#6dfe9c",
+                    "surface-container-highest": "#dee3e8",
+                    "on-secondary-fixed": "#00210c",
+                    "on-error-container": "#93000a",
+                    "inverse-on-surface": "#edf1f6",
+                    "tertiary": "#a43073"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "auto",
+                    "xl": "64px",
+                    "gutter": "20px",
+                    "base": "8px",
+                    "lg": "40px",
+                    "sm": "12px",
+                    "margin-mobile": "16px",
+                    "xs": "4px",
+                    "md": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": [
+                            "Outfit"
+                    ],
+                    "label-sm": [
+                            "Outfit"
+                    ],
+                    "display-lg": [
+                            "Outfit"
+                    ],
+                    "body-md": [
+                            "Outfit"
+                    ],
+                    "display-lg-mobile": [
+                            "Outfit"
+                    ],
+                    "body-lg": [
+                            "Outfit"
+                    ]
+            },
+            "fontSize": {
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "label-sm": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "letterSpacing": "0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "display-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "56px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "display-lg-mobile": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "400"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px 0 rgba(0, 102, 138, 0.05);
+        }
+        
+        .soft-input {
+            transition: all 0.3s ease;
+            border: 1px solid theme('colors.outline-variant');
+        }
+        .soft-input:focus {
+            border-color: theme('colors.primary-container');
+            box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1);
+        }
+
+        .btn-primary {
+            background-color: theme('colors.primary-container');
+            color: theme('colors.on-primary-container');
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+        }
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px -5px rgba(56, 189, 248, 0.4);
+        }
+        .btn-primary:active {
+            transform: scale(0.95);
+        }
+
+        /* Custom Toggle Switch for RTL */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: theme('colors.primary-container');
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: theme('colors.primary-container');
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-surface to-primary-fixed min-h-screen font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar (Web) -->
+<header class="hidden md:flex fixed top-0 w-full z-50 bg-surface/70 backdrop-blur-xl flex-row-reverse justify-between items-center px-lg h-20 transition-all duration-300">
+<!-- Brand -->
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary-container text-4xl" style="font-variation-settings: 'FILL' 1;">celebration</span>
+<span class="font-headline-md text-headline-md font-extrabold text-primary tracking-tight">PartyHub</span>
+</div>
+<!-- Navigation (Web) -->
+<nav class="flex gap-md">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors px-4 py-2 rounded-full hover:bg-surface-container-high" href="#">الرئيسية</a>
+<a class="font-label-sm text-label-sm text-primary font-bold bg-primary-fixed/30 px-4 py-2 rounded-full" href="#">الغرف</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors px-4 py-2 rounded-full hover:bg-surface-container-high" href="#">المتصدرين</a>
+</nav>
+<!-- Actions -->
+<div class="flex items-center gap-sm">
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-primary-fixed border-2 border-surface-container-lowest overflow-hidden shadow-sm cursor-pointer hover:scale-105 transition-transform">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="A cheerful avatar of a user in a cartoonish, soft 3d style. Light blue background, vibrant colors. Smiling face." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWMeT6v67dtb3AHJX0uqNeL1l98y1-06YJSOnDV3dtA_SKJOQACFw10Cxfsji9sNvW-GmrUFcJ3IXi4222uJsfmeo3uHe9VJdLlkBzoPNmiyrIV8RuiA8ItdLeQInJrwoAlReRALL4d7j-DENGZ5aMsRke5IsuX8POrTD87c2D1QUmbHenSuuVc2ZyGzucwmiKd3kjMqE22IKDWYHEMuKtuSUMHitss8kzg7Y0dx9HGrVSmeBE6Uei"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-32 md:pt-32 md:pb-16 px-margin-mobile md:px-margin-desktop max-w-4xl mx-auto flex flex-col items-center justify-center min-h-[calc(100vh-80px)]">
+<!-- Header Section -->
+<div class="text-center mb-md md:mb-lg animate-fade-in-up">
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-2 flex items-center justify-center gap-sm">
+                إنشاء غرفة تحدي <span class="material-symbols-outlined text-tertiary-container" style="font-size: 1em;">rocket_launch</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg mx-auto">جهّز الساحة، اختر الموضوع، ودع المنافسة تبدأ!</p>
+</div>
+<!-- Central Form Card -->
+<div class="glass-card w-full rounded-xl md:rounded-[40px] p-md md:p-lg animate-fade-in-up" style="animation-delay: 100ms;">
+<form class="space-y-md md:space-y-lg">
+<!-- Room Name -->
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-sm" for="roomName">اسم الغرفة</label>
+<input class="soft-input w-full bg-surface-container-lowest rounded-DEFAULT px-4 py-3 font-body-lg text-body-lg text-on-surface placeholder:text-outline focus:outline-none" id="roomName" placeholder="مثال: تحدي العباقرة" type="text"/>
+</div>
+<!-- Grid for Category and Target Score -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md md:gap-lg">
+<!-- Category Dropdown -->
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-sm" for="category">التصنيف</label>
+<div class="relative">
+<select class="soft-input w-full bg-surface-container-lowest rounded-DEFAULT px-4 py-3 font-body-lg text-body-lg text-on-surface appearance-none focus:outline-none pr-10" id="category">
+<option disabled="" selected="" value="">اختر تصنيفاً...</option>
+<option value="general">معلومات عامة</option>
+<option value="history">تاريخ</option>
+<option value="science">علوم وتكنولوجيا</option>
+<option value="pop">ثقافة البوب</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Target Score -->
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-sm" for="score">النقاط المستهدفة للعبة</label>
+<div class="flex items-center gap-sm bg-surface-container-lowest rounded-DEFAULT p-1 border border-outline-variant/50">
+<button class="w-10 h-10 rounded-full bg-surface-container hover:bg-primary-fixed/50 flex items-center justify-center text-on-surface transition-colors" onclick="document.getElementById('scoreInput').stepDown()" type="button">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<input class="flex-1 text-center font-headline-md text-headline-md text-primary bg-transparent border-none focus:ring-0 p-0 m-0" id="scoreInput" max="200" min="10" step="10" type="number" value="50"/>
+<button class="w-10 h-10 rounded-full bg-surface-container hover:bg-primary-fixed/50 flex items-center justify-center text-on-surface transition-colors" onclick="document.getElementById('scoreInput').stepUp()" type="button">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Privacy Toggle & Max Players -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center p-md bg-surface-bright rounded-DEFAULT border border-surface-container-highest gap-md">
+<div class="flex items-center gap-4 w-full md:w-auto">
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 top-0 bottom-0 m-auto translate-x-[100%] transition-transform duration-200" id="privacyToggle" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-outline-variant cursor-pointer" for="privacyToggle"></label>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface">غرفة عامة</p>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">يمكن لأي شخص الانضمام</p>
+</div>
+</div>
+<div class="w-full md:w-auto">
+<label class="font-label-sm text-label-sm text-on-surface mb-2 block md:inline-block md:ml-4">الحد الأقصى للاعبين</label>
+<div class="flex gap-2">
+<button class="px-4 py-2 rounded-full border border-primary-container bg-primary-fixed text-primary font-bold text-sm" type="button">4</button>
+<button class="px-4 py-2 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface-variant hover:border-primary/50 text-sm transition-colors" type="button">8</button>
+<button class="px-4 py-2 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface-variant hover:border-primary/50 text-sm transition-colors" type="button">16</button>
+</div>
+</div>
+</div>
+<!-- Submit Action -->
+<div class="pt-sm flex justify-center">
+<button class="btn-primary w-full md:w-auto px-12 py-4 rounded-full font-headline-md text-headline-md flex items-center justify-center gap-sm" type="button">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                        بدء الغرفة الآن
+                    </button>
+</div>
+</form>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex flex-row-reverse justify-around items-center px-4 pb-4 pt-2 bg-surface/70 dark:bg-surface-dim/70 backdrop-blur-xl border-t border-outline-variant/30 shadow-[0_-10px_15px_-3px_rgba(56,189,248,0.1)] rounded-t-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 active:scale-90 transition-transform duration-300">home</span>
+<span class="font-label-sm text-label-sm mt-1">الرئيسية</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined scale-110 active:scale-90 transition-transform duration-300" style="font-variation-settings: 'FILL' 1;">groups</span>
+<span class="font-label-sm text-label-sm mt-1">الغرف</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 active:scale-90 transition-transform duration-300">leaderboard</span>
+<span class="font-label-sm text-label-sm mt-1">المتصدرين</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 active:scale-90 transition-transform duration-300">person</span>
+<span class="font-label-sm text-label-sm mt-1">الملف الشخصي</span>
+</a>
+</nav>
+<!-- Simple animations script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.getElementById('privacyToggle');
+            const toggleLabel = document.querySelector('.toggle-label');
+            const toggleText = toggle.closest('.flex').querySelector('p:first-of-type');
+
+            toggle.addEventListener('change', (e) => {
+                if(e.target.checked) {
+                    toggleText.textContent = 'غرفة عامة';
+                    toggleLabel.style.backgroundColor = '#38bdf8'; // primary-container
+                } else {
+                    toggleText.textContent = 'غرفة خاصة';
+                    toggleLabel.style.backgroundColor = '#bdc8d1'; // outline-variant
+                }
+            });
+
+            // Initial visual state for custom toggle (RTL adjustment needed via CSS usually, handled inline here for simplicity if needed, but CSS handles it)
+            if(toggle.checked) toggleLabel.style.backgroundColor = '#38bdf8';
+        });
+    </script>
+</body></html>

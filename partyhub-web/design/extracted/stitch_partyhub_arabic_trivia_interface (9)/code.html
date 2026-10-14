@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PartyHub - انضم إلى غرفة</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-background": "#171c20",
+                        "on-surface-variant": "#3e484f",
+                        "secondary-fixed": "#6dfe9c",
+                        "surface-bright": "#f5faff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#005227",
+                        "primary-container": "#38bdf8",
+                        "on-primary-container": "#004965",
+                        "secondary-fixed-dim": "#4de082",
+                        "on-tertiary-fixed-variant": "#85145a",
+                        "outline-variant": "#bdc8d1",
+                        "surface-container-low": "#eff4f9",
+                        "surface-container": "#eaeef3",
+                        "primary-fixed-dim": "#7bd0ff",
+                        "primary-fixed": "#c4e7ff",
+                        "surface-container-high": "#e4e9ee",
+                        "outline": "#6e7980",
+                        "on-primary": "#ffffff",
+                        "surface": "#f5faff",
+                        "on-tertiary": "#ffffff",
+                        "background": "#f5faff",
+                        "inverse-surface": "#2c3135",
+                        "surface-tint": "#00668a",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#ff8cc5",
+                        "on-tertiary-fixed": "#3d0026",
+                        "on-error": "#ffffff",
+                        "on-surface": "#171c20",
+                        "on-primary-fixed-variant": "#004c69",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#811057",
+                        "tertiary-fixed": "#ffd8e7",
+                        "secondary": "#006d36",
+                        "primary": "#00668a",
+                        "surface-dim": "#d6dbdf",
+                        "on-secondary-container": "#007439",
+                        "surface-variant": "#dee3e8",
+                        "tertiary-fixed-dim": "#ffafd3",
+                        "on-primary-fixed": "#001e2c",
+                        "inverse-primary": "#7bd0ff",
+                        "secondary-container": "#6dfe9c",
+                        "surface-container-highest": "#dee3e8",
+                        "on-secondary-fixed": "#00210c",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#edf1f6",
+                        "tertiary": "#a43073"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "margin-desktop": "auto",
+                        "xl": "64px",
+                        "gutter": "20px",
+                        "base": "8px",
+                        "lg": "40px",
+                        "sm": "12px",
+                        "margin-mobile": "16px",
+                        "xs": "4px",
+                        "md": "24px"
+                    },
+                    fontFamily: {
+                        "headline-md": ["Outfit"],
+                        "label-sm": ["Outfit"],
+                        "display-lg": ["Outfit"],
+                        "body-md": ["Outfit"],
+                        "display-lg-mobile": ["Outfit"],
+                        "body-lg": ["Outfit"]
+                    },
+                    fontSize: {
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+                        "label-sm": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }],
+                        "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "display-lg-mobile": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Soft Cloud Background */
+        body {
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.9) 0%, #f5faff 60%, #eaeef3 100%);
+            background-attachment: fixed;
+        }
+        
+        /* Custom Input Styles to remove default styling */
+        input[type="text"]:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body class="text-on-background font-body-md min-h-screen relative overflow-x-hidden">
+<!-- Ambient Decorative Elements (Clouds) -->
+<div class="fixed top-20 right-[-10%] w-96 h-96 bg-primary-fixed/20 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="fixed bottom-20 left-[-10%] w-80 h-80 bg-secondary-fixed/20 rounded-full blur-[80px] pointer-events-none"></div>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/70 dark:bg-surface-dim/70 backdrop-blur-xl flex flex-row-reverse justify-between items-center px-margin-mobile h-16">
+<!-- Desktop Navigation (Responsive Pivot) -->
+<nav class="hidden md:flex gap-6 mr-6 items-center flex-row-reverse">
+<a class="text-on-surface-variant hover:opacity-80 transition-opacity font-label-sm text-label-sm flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="home">home</span>
+                الرئيسية
+            </a>
+<a class="text-primary font-bold flex items-center gap-2 bg-primary-container/20 px-3 py-1.5 rounded-full" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="groups" data-weight="fill" style="font-variation-settings: 'FILL' 1;">groups</span>
+                الغرف
+            </a>
+<a class="text-on-surface-variant hover:opacity-80 transition-opacity font-label-sm text-label-sm flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="leaderboard">leaderboard</span>
+                المتصدرين
+            </a>
+<a class="text-on-surface-variant hover:opacity-80 transition-opacity font-label-sm text-label-sm flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="person">person</span>
+                الملف الشخصي
+            </a>
+</nav>
+<div class="flex gap-4 items-center flex-row-reverse">
+<button class="text-on-surface-variant hover:opacity-80 transition-opacity scale-105 active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<button class="text-on-surface-variant hover:opacity-80 transition-opacity scale-105 active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim ml-auto md:ml-0 flex-shrink-0">
+            PartyHub
+        </div>
+</header>
+<!-- Main Content -->
+<main class="pt-24 pb-32 md:pb-24 px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto min-h-screen flex flex-col items-center">
+<!-- Hero / Join Action -->
+<section class="w-full max-w-2xl mt-8 md:mt-16 mb-16 flex flex-col items-center text-center">
+<h1 class="font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-on-surface mb-4">انضم إلى غرفة</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-md">أدخل رمز الغرفة المكون من 6 أرقام للانضمام إلى أصدقائك أو اكتشف غرفاً عامة متاحة.</p>
+<div class="w-full relative flex justify-center mb-8">
+<!-- Large Input Container - Level 1/2 Glassmorphism -->
+<div class="bg-surface-container-lowest/80 backdrop-blur-md border border-outline-variant/40 rounded-full p-2 flex flex-col sm:flex-row items-center gap-2 w-full max-w-lg shadow-[0_4px_20px_-5px_rgba(0,102,138,0.05)] transition-all focus-within:shadow-[0_10px_25px_-5px_rgba(56,189,248,0.2)] focus-within:border-primary-fixed">
+<input class="w-full bg-transparent border-none text-center font-display-lg text-display-lg-mobile md:text-display-lg tracking-[0.5em] text-on-surface placeholder:text-outline/40 py-2 sm:py-4 px-6 rounded-full" dir="ltr" maxlength="6" placeholder="0 0 0 0 0 0" type="text"/>
+<button class="w-full sm:w-auto mt-2 sm:mt-0 bg-primary text-on-primary font-headline-md text-headline-md px-8 py-4 sm:py-5 rounded-full hover:scale-105 active:scale-95 transition-transform duration-200 whitespace-nowrap flex-shrink-0 shadow-[0_10px_15px_-3px_rgba(56,189,248,0.2)]">
+                        انضمام
+                    </button>
+</div>
+</div>
+</section>
+<!-- Public Rooms List -->
+<section class="w-full">
+<div class="flex justify-between items-center mb-8 border-b border-outline-variant/20 pb-4">
+<h2 class="font-headline-md text-headline-md text-on-surface flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="public">public</span>
+                    الغرف العامة النشطة
+                </h2>
+<button class="text-primary hover:text-primary-container transition-colors font-label-sm text-label-sm flex items-center gap-1">
+                    تحديث
+                    <span class="material-symbols-outlined text-[18px]" data-icon="refresh">refresh</span>
+</button>
+</div>
+<!-- Bento Grid Layout for Rooms -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Room Card 1 -->
+<article class="bg-surface-container-lowest/70 backdrop-blur-md border border-outline-variant/30 rounded-2xl p-6 flex flex-col gap-4 hover:shadow-[0_8px_20px_-5px_rgba(56,189,248,0.1)] hover:border-primary-fixed/50 transition-all duration-300 group">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-[20px] font-bold text-on-surface mb-1">تحدي المعلومات العامة</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="account_circle">account_circle</span>
+                                بواسطة أحمد
+                            </p>
+</div>
+<span class="bg-tertiary-fixed/40 text-on-tertiary-fixed font-label-sm text-label-sm px-3 py-1 rounded-full flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+                            قيد الانتظار
+                        </span>
+</div>
+<div class="flex items-center gap-2 mt-2">
+<span class="bg-surface-variant/50 text-on-surface-variant font-label-sm text-label-sm px-3 py-1.5 rounded-full">ثقافة عامة</span>
+<span class="bg-surface-variant/50 text-on-surface-variant font-label-sm text-label-sm px-3 py-1.5 rounded-full">متوسط</span>
+</div>
+<div class="flex justify-between items-center mt-auto pt-4 border-t border-outline-variant/10">
+<div class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-outline" data-icon="group">group</span>
+<span class="font-headline-md text-[18px] font-bold">5<span class="text-outline-variant text-[16px]">/8</span></span>
+</div>
+<button class="bg-surface-container-high hover:bg-primary hover:text-on-primary text-primary font-label-sm text-label-sm px-5 py-2.5 rounded-full transition-all duration-200 group-hover:scale-105">
+                            انضمام
+                        </button>
+</div>
+</article>
+<!-- Room Card 2 -->
+<article class="bg-surface-container-lowest/70 backdrop-blur-md border border-outline-variant/30 rounded-2xl p-6 flex flex-col gap-4 hover:shadow-[0_8px_20px_-5px_rgba(56,189,248,0.1)] hover:border-primary-fixed/50 transition-all duration-300 group">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-[20px] font-bold text-on-surface mb-1">ليلة الرياضة</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="account_circle">account_circle</span>
+                                بواسطة سارة
+                            </p>
+</div>
+<span class="bg-tertiary-fixed/40 text-on-tertiary-fixed font-label-sm text-label-sm px-3 py-1 rounded-full flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+                            قيد الانتظار
+                        </span>
+</div>
+<div class="flex items-center gap-2 mt-2">
+<span class="bg-surface-variant/50 text-on-surface-variant font-label-sm text-label-sm px-3 py-1.5 rounded-full">رياضة</span>
+<span class="bg-surface-variant/50 text-on-surface-variant font-label-sm text-label-sm px-3 py-1.5 rounded-full">صعب</span>
+</div>
+<div class="flex justify-between items-center mt-auto pt-4 border-t border-outline-variant/10">
+<div class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-outline" data-icon="group">group</span>
+<span class="font-headline-md text-[18px] font-bold">2<span class="text-outline-variant text-[16px]">/10</span></span>
+</div>
+<button class="bg-surface-container-high hover:bg-primary hover:text-on-primary text-primary font-label-sm text-label-sm px-5 py-2.5 rounded-full transition-all duration-200 group-hover:scale-105">
+                            انضمام
+                        </button>
+</div>
+</article>
+<!-- Room Card 3 -->
+<article class="bg-surface-container-lowest/70 backdrop-blur-md border border-outline-variant/30 rounded-2xl p-6 flex flex-col gap-4 hover:shadow-[0_8px_20px_-5px_rgba(56,189,248,0.1)] hover:border-primary-fixed/50 transition-all duration-300 group">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-[20px] font-bold text-on-surface mb-1">أفلام ومسلسلات</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="account_circle">account_circle</span>
+                                بواسطة خالد
+                            </p>
+</div>
+<span class="bg-tertiary-fixed/40 text-on-tertiary-fixed font-label-sm text-label-sm px-3 py-1 rounded-full flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+                            قيد الانتظار
+                        </span>
+</div>
+<div class="flex items-center gap-2 mt-2">
+<span class="bg-surface-variant/50 text-on-surface-variant font-label-sm text-label-sm px-3 py-1.5 rounded-full">ترفيه</span>
+<span class="bg-surface-variant/50 text-on-surface-variant font-label-sm text-label-sm px-3 py-1.5 rounded-full">سهل</span>
+</div>
+<div class="flex justify-between items-center mt-auto pt-4 border-t border-outline-variant/10">
+<div class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-outline" data-icon="group">group</span>
+<span class="font-headline-md text-[18px] font-bold">7<span class="text-outline-variant text-[16px]">/8</span></span>
+</div>
+<button class="bg-surface-container-high hover:bg-primary hover:text-on-primary text-primary font-label-sm text-label-sm px-5 py-2.5 rounded-full transition-all duration-200 group-hover:scale-105">
+                            انضمام
+                        </button>
+</div>
+</article>
+</div>
+<div class="mt-8 flex justify-center">
+<button class="text-on-surface-variant font-label-sm text-label-sm border border-outline-variant/30 bg-surface-container-lowest/50 hover:bg-surface-container-high px-6 py-3 rounded-full transition-colors backdrop-blur-sm">
+                    عرض المزيد من الغرف
+                </button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex flex-row-reverse justify-around items-center px-4 pb-4 pt-2 bg-surface/70 backdrop-blur-xl border-t border-outline-variant/30 shadow-[0_-10px_15px_-3px_rgba(56,189,248,0.1)] rounded-t-lg">
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors scale-110 active:scale-90 duration-300 rounded-full">
+<span class="material-symbols-outlined mb-1 text-[24px]" data-icon="home">home</span>
+<span class="font-label-sm text-[12px]">الرئيسية</span>
+</button>
+<!-- Active Item -->
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 hover:bg-surface-container-high transition-colors scale-110 active:scale-90 duration-300">
+<span class="material-symbols-outlined mb-1 text-[24px]" data-icon="groups" data-weight="fill" style="font-variation-settings: 'FILL' 1;">groups</span>
+<span class="font-label-sm text-[12px]">الغرف</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors scale-110 active:scale-90 duration-300 rounded-full">
+<span class="material-symbols-outlined mb-1 text-[24px]" data-icon="leaderboard">leaderboard</span>
+<span class="font-label-sm text-[12px]">المتصدرين</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors scale-110 active:scale-90 duration-300 rounded-full">
+<span class="material-symbols-outlined mb-1 text-[24px]" data-icon="person">person</span>
+<span class="font-label-sm text-[12px]">الملف الشخصي</span>
+</button>
+</nav>
+</body></html>

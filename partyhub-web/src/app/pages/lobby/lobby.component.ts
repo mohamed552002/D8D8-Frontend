@@ -10,106 +10,140 @@ import { SignalRService } from '../../services/signalr.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   template: `
-    <div class="shell">
-      <main class="panel" style="max-width: 650px;">
-        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-          
-          <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
-            <div>
-              <p class="subtitle" style="margin: 0; font-size: 0.95rem;">رمز الغرفة</p>
-              <h2 class="brand-title" style="font-size: 2.2rem; margin: 0;">
-                {{ (room$ | async)?.code ? 'غرفة ' + (room$ | async)?.code : 'غرفة --' }}
-              </h2>
-            </div>
-            <div class="player-tag" style="font-size: 1rem; padding: 0.5rem 1rem;">
-              {{ (room$ | async)?.players?.length ?? 0 }} / 8 لاعبين
-            </div>
-          </div>
+    <div class="min-h-screen flex flex-col bg-background text-on-background relative overflow-x-hidden">
+      <!-- Header -->
+      <header class="fixed top-0 w-full z-50 backdrop-blur-md bg-surface/70 border-b border-outline-variant/30 shadow-sm flex justify-between items-center px-6 py-4">
+        <h1 class="font-headline-md text-2xl font-bold text-primary tracking-tight">PartyHub • غرفة الانتظار</h1>
+        <button type="button" (click)="onLeaveRoom()" class="flex items-center gap-1 text-on-surface-variant hover:text-error transition-colors px-3 py-1.5 rounded-full hover:bg-error-container/20 text-sm font-semibold">
+          <span class="material-symbols-outlined text-sm">logout</span>
+          <span>مغادرة</span>
+        </button>
+      </header>
 
-          <!-- Host Game Settings Options -->
-          <div *ngIf="(role$ | async) === 'host'" class="question-card" style="display: flex; flex-direction: column; gap: 1rem; background: rgba(11, 15, 25, 0.5); padding: 1.2rem; border-radius: 16px;">
-            <h3 style="font-size: 1.1rem; color: var(--sky-blue); font-weight: 700;">⚙️ إعدادات اللعبة:</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-              <div style="display: flex; flex-direction: column; gap: 0.4rem; text-align: right;">
-                <label for="targetPoints" style="font-size: 0.9rem; font-weight: 700; color: #FFFFFF;">نقاط الفوز (Target Score):</label>
-                <input
-                  id="targetPoints"
-                  type="number"
-                  class="input-field"
-                  [(ngModel)]="targetPoints"
-                  min="1"
-                  max="100"
-                  style="text-align: center; font-weight: 900; font-size: 1.1rem;"
-                />
-              </div>
-              <div style="display: flex; flex-direction: column; gap: 0.4rem; text-align: right;">
-                <label for="answerTimeout" style="font-size: 0.9rem; font-weight: 700; color: #FFFFFF;">مدة الـ Buzz (بالثواني):</label>
-                <input
-                  id="answerTimeout"
-                  type="number"
-                  class="input-field"
-                  [(ngModel)]="answerTimeoutSeconds"
-                  min="3"
-                  max="30"
-                  style="text-align: center; font-weight: 900; font-size: 1.1rem;"
-                />
-              </div>
-              <div style="display: flex; flex-direction: column; gap: 0.4rem; text-align: right; grid-column: span 2;">
-                <label for="categorySelect" style="font-size: 0.9rem; font-weight: 700; color: #FFFFFF;">🎯 تصنيف الأسئلة (Category):</label>
-                <select
-                  id="categorySelect"
-                  class="input-field"
-                  [(ngModel)]="selectedCategory"
-                  style="font-size: 1rem; font-weight: 700; background: rgba(20, 26, 45, 0.9); color: #FFF; border-color: var(--sky-blue); cursor: pointer;"
-                >
-                  <option value="جميع التصنيفات">جميع التصنيفات (كل المجالات)</option>
-                  <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
-                </select>
-              </div>
-            </div>
+      <main class="pt-24 pb-28 px-4 max-w-2xl mx-auto min-h-screen flex flex-col gap-6 w-full">
+        <!-- Room Code Banner Header -->
+        <div class="glass-card rounded-2xl p-6 flex flex-col md:flex-row justify-between items-center gap-4 shadow-sm">
+          <div>
+            <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary-container/20 text-on-primary-container font-label-sm text-xs font-bold mb-2">
+              <span class="material-symbols-outlined text-sm">meeting_room</span>
+              غرفة الانتظار المباشرة
+            </span>
+            <h2 class="font-display-lg-mobile text-3xl font-extrabold text-primary">
+              {{ (room$ | async)?.code ? 'رمز الغرفة: ' + (room$ | async)?.code : 'رمز الغرفة: --' }}
+            </h2>
           </div>
-
-          <div *ngIf="(role$ | async) === 'host'" style="display: flex; flex-direction: column; align-items: center; gap: 0.6rem; width: 100%; margin-top: 0.5rem;">
-            <div style="display: flex; gap: 1rem; width: 100%; justify-content: center;">
-              <button
-                class="btn-primary"
-                type="button"
-                [disabled]="!canStartGame()"
-                [style.opacity]="canStartGame() ? '1' : '0.45'"
-                [style.cursor]="canStartGame() ? 'pointer' : 'not-allowed'"
-                [style.filter]="canStartGame() ? 'none' : 'grayscale(0.5)'"
-                (click)="onStartRound()"
-              >
-                بدء اللعبة 🚀
-              </button>
-              <button class="btn-secondary" type="button" (click)="onLeaveRoom()">مغادرة</button>
-            </div>
-            <p *ngIf="!canStartGame()" style="font-size: 0.85rem; color: #E94E77; font-weight: 700; margin: 0; text-align: center;">
-              ⚠️ يلزم انضمام لاعبين اثنين على الأقل لبدء اللعبة
-            </p>
-          </div>
-
-          <div *ngIf="(role$ | async) !== 'host'" style="display: flex; gap: 1rem; width: 100%; justify-content: center; margin-top: 0.5rem;">
-            <button class="btn-secondary" type="button" (click)="onLeaveRoom()">مغادرة الغرفة</button>
-          </div>
-
-          <div style="width: 100%; margin-top: 0.5rem;">
-            <h3 style="color: var(--sky-blue); font-size: 1.1rem; margin-bottom: 0.8rem; text-align: right;">
-              اللاعبين المُنضمين:
-            </h3>
-            <ul class="leaderboard-list">
-              <li *ngFor="let p of (room$ | async)?.players" class="leaderboard-item">
-                <span style="font-weight: 700;">{{ p.nickname }}</span>
-                <span class="player-tag">{{ p.isHost ? 'المضيف 🎤' : 'لاعب 📱' }}</span>
-              </li>
-            </ul>
-          </div>
-
-          <div *ngIf="(status$ | async)?.text as statusText" class="status" [ngClass]="{ 'error': (status$ | async)?.isError }">
-            {{ statusText }}
+          <div class="bg-primary-container text-on-primary-container font-headline-md text-lg font-bold px-5 py-2.5 rounded-full shadow-sm flex items-center gap-2">
+            <span class="material-symbols-outlined">group</span>
+            <span>{{ (room$ | async)?.players?.length ?? 0 }} / 8 لاعبين</span>
           </div>
         </div>
+
+        <!-- Host Game Options (Host Only) -->
+        <div *ngIf="(role$ | async) === 'host'" class="glass-card rounded-2xl p-6 flex flex-col gap-5 shadow-sm">
+          <div class="flex items-center gap-2 border-b border-outline-variant/30 pb-3">
+            <span class="material-symbols-outlined text-primary text-2xl">settings</span>
+            <h3 class="font-headline-md text-xl font-bold text-primary">إعدادات المباراة والجولة</h3>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="flex flex-col gap-2">
+              <label for="targetPoints" class="font-label-sm text-sm font-semibold text-on-surface">نقاط الفوز (Target Score):</label>
+              <input
+                id="targetPoints"
+                type="number"
+                [(ngModel)]="targetPoints"
+                min="1"
+                max="100"
+                class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl py-3 px-4 text-center font-bold text-lg text-primary outline-none focus:border-primary shadow-sm"
+              />
+            </div>
+            <div class="flex flex-col gap-2">
+              <label for="answerTimeout" class="font-label-sm text-sm font-semibold text-on-surface">مدة الـ Buzz (بالثواني):</label>
+              <input
+                id="answerTimeout"
+                type="number"
+                [(ngModel)]="answerTimeoutSeconds"
+                min="3"
+                max="30"
+                class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl py-3 px-4 text-center font-bold text-lg text-primary outline-none focus:border-primary shadow-sm"
+              />
+            </div>
+            <div class="flex flex-col gap-2 sm:col-span-2">
+              <label for="categorySelect" class="font-label-sm text-sm font-semibold text-on-surface">تصنيف الأسئلة (Category):</label>
+              <select
+                id="categorySelect"
+                [(ngModel)]="selectedCategory"
+                class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl py-3 px-4 font-bold text-primary outline-none focus:border-primary shadow-sm cursor-pointer"
+              >
+                <option value="جميع التصنيفات">جميع التصنيفات (كل المجالات)</option>
+                <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Host Action Button -->
+        <div *ngIf="(role$ | async) === 'host'" class="flex flex-col items-center gap-2 w-full">
+          <button
+            type="button"
+            [disabled]="!canStartGame()"
+            class="w-full bg-primary-container text-on-primary-container font-headline-md font-bold text-xl py-4 rounded-xl shadow-[0_10px_15px_-3px_rgba(56,189,248,0.3)] hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            (click)="onStartRound()"
+          >
+            <span class="material-symbols-outlined text-2xl">play_circle</span>
+            <span>بدء اللعبة وتوزيع الأسئلة</span>
+          </button>
+          <p *ngIf="!canStartGame()" class="text-error font-bold text-sm flex items-center gap-1 mt-1">
+            <span class="material-symbols-outlined text-sm">warning</span>
+            <span>يلزم انضمام لاعبين اثنين على الأقل لبدء اللعبة</span>
+          </p>
+        </div>
+
+        <!-- Joined Players List (Design 10 style Avatar cards) -->
+        <div class="glass-card rounded-2xl p-6 shadow-sm">
+          <h3 class="font-headline-md text-xl font-bold text-primary mb-4 flex items-center gap-2 border-b border-outline-variant/30 pb-3">
+            <span class="material-symbols-outlined">groups</span>
+            <span>اللاعبون المنضمون للغرفة</span>
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div *ngFor="let p of (room$ | async)?.players" class="flex items-center justify-between p-3 rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-sm">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-primary-fixed text-primary font-bold flex items-center justify-center text-lg">
+                  {{ p.nickname.charAt(0) }}
+                </div>
+                <span class="font-body-lg font-bold text-on-surface">{{ p.nickname }}</span>
+              </div>
+              <span class="px-3 py-1 rounded-full text-xs font-bold" [ngClass]="p.isHost ? 'bg-primary-container text-on-primary-container' : 'bg-surface-container-high text-on-surface-variant'">
+                {{ p.isHost ? 'المضيف 🎤' : 'لاعب 📱' }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="(status$ | async)?.text as statusText" class="status" [ngClass]="{ 'error': (status$ | async)?.isError }">
+          {{ statusText }}
+        </div>
       </main>
+
+      <!-- Bottom Mobile Navigation Bar -->
+      <nav class="md:hidden fixed bottom-0 w-full z-50 rounded-t-2xl backdrop-blur-xl bg-surface/90 shadow-[0_-4px_12px_rgba(56,189,248,0.15)] flex flex-row-reverse justify-around items-center px-2 py-3 border-t border-outline-variant/20">
+        <a (click)="onLeaveRoom()" class="flex flex-col items-center justify-center text-on-surface-variant p-2 rounded-lg cursor-pointer">
+          <span class="material-symbols-outlined mb-1">home</span>
+          <span class="font-label-sm text-xs">الرئيسية</span>
+        </a>
+        <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1.5 shadow-sm cursor-pointer">
+          <span class="material-symbols-outlined mb-1">groups</span>
+          <span class="font-label-sm text-xs">الغرف</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant p-2 rounded-lg cursor-pointer">
+          <span class="material-symbols-outlined mb-1">emoji_events</span>
+          <span class="font-label-sm text-xs">الإنجازات</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant p-2 rounded-lg cursor-pointer">
+          <span class="material-symbols-outlined mb-1">settings</span>
+          <span class="font-label-sm text-xs">الإعدادات</span>
+        </a>
+      </nav>
     </div>
   `
 })
